@@ -16,7 +16,7 @@ namespace ProyectoERP.Models
         [Column("EMAIL")]
         public string Email { get; set; }
         [Column("COMENTARIOS")]
-        public string Coments { get; set; }
+        public string Comentarios { get; set; }
         [Column("CURSO")]
         public string Curso { get; set; }
     }
