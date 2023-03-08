@@ -1,5 +1,7 @@
 ﻿@model List<ClientePotencial>
-
+@{
+    List<string> cursos = ViewBag.CURSOS as List<string>;
+}
 <main>
 <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
     <div class="w-full mb-1">
@@ -30,17 +32,17 @@
         </div>
         <div class="sm:flex">
             <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                <form class="lg:pr-3" action="#" method="GET">
+                <form id="selectCursos" class="lg:pr-3" action="#" method="POST">
                 <label for="users-search" class="sr-only">Search</label>
                 <div class="relative mt-1 lg:w-64 xl:w-96">
                 <label for="settings-curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
-                <select id="settings-curso" name="countries" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option>QUIROMASAJE PROFESIONAL</option>
-                    <option>QUIROMASAJE BASICO</option>
-                    <option>BALINES</option>
-                    <option>REFLEXOLOGIA PODAL</option>
+                <select id="settings-curso" name="curso" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    @foreach (string curso in cursos)
+                            {
+                                <option value="@curso">@curso</option>
+                            }
                 </select>
-            </div>
+                </div>
                 </form>
                 <div class="flex pl-0 mt-3 space-x-1 sm:pl-2 sm:mt-0">
                     <a href="#" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -116,7 +118,7 @@
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                                 <img class="w-10 h-10 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="Neil Sims avatar">
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">@cliente.Nombre</div>
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">@cliente.NombreCliente</div>
                                     <div class="text-sm font-normal text-gray-500 dark:text-gray-400">@cliente.Email</div>
                                 </div>
                             </td>
@@ -296,5 +298,13 @@
         </div>
     </div>
 </div>
+</main>
 
-    </main>
+<script>
+    const selectElement = document.getElementById('settings-curso');
+    const formElement = document.getElementById('selectCursos');
+
+    selectElement.addEventListener('change', function () {
+        formElement.submit();
+    });
+</script>

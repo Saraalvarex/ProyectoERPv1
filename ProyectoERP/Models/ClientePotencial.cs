@@ -10,9 +10,9 @@ namespace ProyectoERP.Models
         [Column("IDINTERESADO")]
         public int IdInteresado { get; set;}
         [Column("NOMBRE")]
-        public string Nombre { get; set; }
+        public string NombreCliente { get; set; }
         [Column("TLF")]
-        public int Tlf { get; set; }
+        public string Tlf { get; set; }
         [Column("EMAIL")]
         public string Email { get; set; }
         [Column("COMENTARIOS")]

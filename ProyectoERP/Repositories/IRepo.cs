@@ -5,6 +5,7 @@ namespace ProyectoERP.Repositories
     public interface IRepo
     {
         List<ClientePotencial> GetClientesP();
+        List<string> GetCursos();
         List<ClientePotencial> FindClientesP(string curso);
         ClientePotencial GetCliente(int id);
         void InsertClienteP(int id, string nombre, string tlf, string email, string comentarios);

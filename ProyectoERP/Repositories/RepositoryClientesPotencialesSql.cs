@@ -1,6 +1,15 @@
 ﻿using ProyectoERP.Data;
 using ProyectoERP.Models;
+#region VISTAS
+//CREATE VIEW V_INTERESADOS_CURSO
+//AS
+//SELECT I.IDINTERESADO, I.NOMBRE, I.TLF, I.EMAIL, I.COMENTARIOS, C.NOMBRE AS CURSO
+//FROM INTERESADOS I
+//INNER JOIN CURSOS C ON I.CODCURSO = C.CODCURSO
+//GO
 
+//SELECT * FROM V_INTERESADOS_CURSO
+#endregion
 namespace ProyectoERP.Repositories
 {
     public class RepositoryClientesPotencialesSql : IRepo
@@ -33,6 +42,13 @@ namespace ProyectoERP.Repositories
             var consulta = from datos in this.context.ClientesPotenciales
                            select datos;
             return consulta.ToList();
+        }
+
+        public List<string> GetCursos()
+        {
+            var cursos = from datos in this.context.Cursos
+                         select datos.NombreCurso;
+            return cursos.ToList();
         }
 
         public void InsertClienteP(int id, string nombre, string tlf, string email, string comentarios)
