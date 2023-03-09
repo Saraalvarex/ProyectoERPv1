@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoERP.Models
 {
-    [Table("V_INTERESADOS_CURSO")]
+    [Table("V_INTERESADOS_CURSOS")]
     public class ClientePotencial
     {
         [Key]

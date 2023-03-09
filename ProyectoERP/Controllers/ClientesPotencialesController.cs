@@ -27,5 +27,14 @@ namespace ProyectoERP.Controllers
             List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
             return View(clientes);
         }
+
+        //[HttpPost]
+        //public IActionResult Index(string curso)
+        //{
+        //    List<string> cursos = this.repo.GetCursos();
+        //    ViewBag.CURSOS = cursos;
+        //    List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
+        //    return View(clientes);
+        //}
     }
 }

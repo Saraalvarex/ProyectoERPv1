@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 string connectionString =
     builder.Configuration.GetConnectionString("SqlERP");
-builder.Services.AddTransient<IRepo, RepositoryClientesPotencialesSql>();
+builder.Services.AddTransient<IRepo, RepositoryERPSql>();
 builder.Services.AddDbContext<ErpContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
 

@@ -1,21 +1,21 @@
 ﻿using ProyectoERP.Data;
 using ProyectoERP.Models;
 #region VISTAS
-//CREATE VIEW V_INTERESADOS_CURSO
+//CREATE VIEW V_INTERESADOS_CURSOS
 //AS
 //SELECT I.IDINTERESADO, I.NOMBRE, I.TLF, I.EMAIL, I.COMENTARIOS, C.NOMBRE AS CURSO
 //FROM INTERESADOS I
 //INNER JOIN CURSOS C ON I.CODCURSO = C.CODCURSO
 //GO
 
-//SELECT * FROM V_INTERESADOS_CURSO
+//SELECT * FROM V_INTERESADOS_CURSOS
 #endregion
 namespace ProyectoERP.Repositories
 {
-    public class RepositoryClientesPotencialesSql : IRepo
+    public class RepositoryERPSql : IRepo
     {
         private ErpContext context;
-        public RepositoryClientesPotencialesSql(ErpContext context)
+        public RepositoryERPSql(ErpContext context)
         {
             this.context = context;
         }

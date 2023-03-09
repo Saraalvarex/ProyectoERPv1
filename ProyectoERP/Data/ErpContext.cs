@@ -7,7 +7,6 @@ namespace ProyectoERP.Data
     public class ErpContext: DbContext
     {
         public ErpContext(DbContextOptions<ErpContext> options) : base(options) { }
-
         public DbSet<ClientePotencial> ClientesPotenciales { get; set; }
         public DbSet<Curso> Cursos { get; set; }
     }
