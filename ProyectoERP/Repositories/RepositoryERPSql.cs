@@ -32,9 +32,12 @@ namespace ProyectoERP.Repositories
             return consulta.ToList();
         }
 
-        public ClientePotencial GetCliente(int id)
+        public ClientePotencial GetCliente(int idinteresado)
         {
-            throw new NotImplementedException();
+            var consulta = from datos in this.context.ClientesPotenciales
+                           where datos.IdInteresado==idinteresado
+                           select datos;
+            return consulta.FirstOrDefault();
         }
 
         public List<ClientePotencial> GetClientesP()

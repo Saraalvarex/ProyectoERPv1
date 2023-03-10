@@ -11,11 +11,16 @@ namespace ProyectoERP.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? idinteresado)
         {
             List<string> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
             List<ClientePotencial> clientes = this.repo.GetClientesP();
+            if (idinteresado != null)
+            {
+                ClientePotencial cliente = this.repo.GetCliente(idinteresado.Value);
+                ViewBag.CLIENTE = cliente;
+            }
             return View(clientes);
         }
 
@@ -27,14 +32,5 @@ namespace ProyectoERP.Controllers
             List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
             return View(clientes);
         }
-
-        //[HttpPost]
-        //public IActionResult Index(string curso)
-        //{
-        //    List<string> cursos = this.repo.GetCursos();
-        //    ViewBag.CURSOS = cursos;
-        //    List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
-        //    return View(clientes);
-        //}
     }
 }
