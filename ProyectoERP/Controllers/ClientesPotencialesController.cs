@@ -32,5 +32,10 @@ namespace ProyectoERP.Controllers
             List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
             return View(clientes);
         }
+
+        public IActionResult _InsertarCliente()
+        {
+            return View("_InsertarCliente", new ClientePotencial());
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using ProyectoERP.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using ProyectoERP.Data;
 using ProyectoERP.Models;
 #region VISTAS
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -10,6 +12,16 @@ using ProyectoERP.Models;
 
 //SELECT * FROM V_INTERESADOS_CURSOS
 #endregion
+#region PROCEDURES
+//CREATE PROCEDURE SP_INSERT_CLIENTEP
+//(@NOMBRE NVARCHAR(50), @TLF NVARCHAR(10), @EMAIL NVARCHAR(20),
+//@COMENTARIOS NVARCHAR(100), @CODCURSO NVARCHAR(5))
+//AS
+//    INSERT INTO INTERESADOS
+//	VALUES ((SELECT MAX(IDINTERESADO) +1 FROM INTERESADOS),
+//	@NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO)
+//GO
+#endregion
 namespace ProyectoERP.Repositories
 {
     public class RepositoryERPSql : IRepo
@@ -19,11 +31,6 @@ namespace ProyectoERP.Repositories
         {
             this.context = context;
         }
-        public void DeleteClienteP(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<ClientePotencial> FindClientesP(string curso)
         {
             var consulta = from datos in this.context.ClientesPotenciales
@@ -54,12 +61,23 @@ namespace ProyectoERP.Repositories
             return cursos.ToList();
         }
 
-        public void InsertClienteP(int id, string nombre, string tlf, string email, string comentarios)
+        public async Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios,string codcurso)
+        {
+            string sql = "SP_INSERT_CLIENTEP @ID, @NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO";
+            SqlParameter pamnombre = new SqlParameter("@NOMBRE", nombrecliente);
+            SqlParameter pamtlf = new SqlParameter("@TLF", tlf);
+            SqlParameter pamemail = new SqlParameter("@EMAIL", email);
+            SqlParameter pamcomentarios = new SqlParameter("@COMENTARIOS", comentarios);
+            SqlParameter pamcodcurso = new SqlParameter("@CODCURSO", codcurso);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamnombre, pamtlf, pamemail, pamcomentarios, pamcodcurso);
+        }
+
+        public async Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateClienteP(int id, string nombre, string tlf, string email, string comentarios)
+        Task IRepo.DeleteClienteP(int id)
         {
             throw new NotImplementedException();
         }

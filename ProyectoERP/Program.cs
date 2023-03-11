@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
+using ProyectoERP.Helpers;
 using ProyectoERP.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.AddSingleton<HelperMail>();
 string connectionString =
     builder.Configuration.GetConnectionString("SqlERP");
 builder.Services.AddTransient<IRepo, RepositoryERPSql>();

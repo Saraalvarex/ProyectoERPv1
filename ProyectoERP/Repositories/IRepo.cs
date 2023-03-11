@@ -8,8 +8,8 @@ namespace ProyectoERP.Repositories
         List<string> GetCursos();
         List<ClientePotencial> FindClientesP(string curso);
         ClientePotencial GetCliente(int id);
-        void InsertClienteP(int id, string nombre, string tlf, string email, string comentarios);
-        void UpdateClienteP(int id, string nombre, string tlf, string email, string comentarios);
-        void DeleteClienteP(int id);
+        Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso);
+        Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios);
+        Task DeleteClienteP(int id);
     }
 }
