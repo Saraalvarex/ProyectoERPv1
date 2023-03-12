@@ -5,6 +5,7 @@ using ProyectoERP.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.AddSingleton<HelperAuth>();
 builder.Services.AddSingleton<HelperMail>();
 string connectionString =
     builder.Configuration.GetConnectionString("SqlERP");
