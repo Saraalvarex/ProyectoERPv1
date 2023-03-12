@@ -48,7 +48,7 @@ namespace ProyectoERP.Repositories
                 byte[] claveuser = user.Clave;
                 //Debemos cifrar de nuevo el password de usuario
                 //junto a su salt utilizando la misma tecnica
-                string salt = user.Salt;
+                string salt = HelperAuth.GenerarSalt();
                 byte[] temp = HelperAuth.EncriptarClave(clave, salt);
                 bool respuesta = HelperAuth.CompararClaves(claveuser, temp);
                 if (respuesta == true)
