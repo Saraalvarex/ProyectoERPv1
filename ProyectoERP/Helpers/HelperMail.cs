@@ -6,15 +6,15 @@ namespace ProyectoERP.Helpers
     //Enviar correos a interesados, facturas a alumnos, etc
     public class HelperMail
     {
-        private IConfiguration configuration;
-        public HelperMail(IConfiguration confirguration)
+        private IConfiguration config;
+        public HelperMail(IConfiguration config)
         {
-            this.configuration= confirguration;
+            this.config = config;
         }
         private MailMessage ConfigureMailMessage(string para, string asunto, string mensaje)
         {
             MailMessage mailMessage= new MailMessage();
-            string email = this.configuration.GetValue<string>("MailSettings:Credentials:user");
+            string email = this.config.GetValue<string>("MailSettings:Credentials:user");
             mailMessage.From = new MailAddress(email);
             mailMessage.To.Add(new MailAddress(para));
             mailMessage.Subject = asunto;
@@ -24,12 +24,12 @@ namespace ProyectoERP.Helpers
         }
         private SmtpClient ConfigureSmtpClient()
         {
-            string user = this.configuration.GetValue<string>("MailSettings:Credentials:User");
-            string password = this.configuration.GetValue<string>("MailSettings:Credentials:Password");
-            string host = this.configuration.GetValue<string>("MailSettings:Smtp:Host");
-            int port = this.configuration.GetValue<int>("MailSettings:Smtp:Port");
-            bool enableSSL = this.configuration.GetValue<bool>("MailSettings:Smtp:EnableSSL");
-            bool defaultCredentials = this.configuration.GetValue<bool>("MailSettings:Smtp:DefaultCredentials");
+            string user = this.config.GetValue<string>("MailSettings:Credentials:User");
+            string password = this.config.GetValue<string>("MailSettings:Credentials:Password");
+            string host = this.config.GetValue<string>("MailSettings:Smtp:Host");
+            int port = this.config.GetValue<int>("MailSettings:Smtp:Port");
+            bool enableSSL = this.config.GetValue<bool>("MailSettings:Smtp:EnableSSL");
+            bool defaultCredentials = this.config.GetValue<bool>("MailSettings:Smtp:DefaultCredentials");
             SmtpClient client = new SmtpClient();
             client.Host = host;
             client.Port = port;
