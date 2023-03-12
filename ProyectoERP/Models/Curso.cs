@@ -12,9 +12,9 @@ namespace ProyectoERP.Models
         [Column("NOMBRE")]
         public string NombreCurso { get; set; }
         [Column("MATRICULA")]
-        public float Matricula { get; set; }
+        public decimal Matricula { get; set; }
         [Column("PRECIO")]
-        public float Precio { get; set; }
+        public decimal Precio { get; set; }
         [Column("DURACION")]
         public int Duracion { get; set; }
     }

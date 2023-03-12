@@ -54,16 +54,16 @@ namespace ProyectoERP.Repositories
             return consulta.ToList();
         }
 
-        public List<string> GetCursos()
+        public List<Curso> GetCursos()
         {
             var cursos = from datos in this.context.Cursos
-                         select datos.NombreCurso;
+                         select datos;
             return cursos.ToList();
         }
 
-        public async Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios,string codcurso)
+        public async Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
         {
-            string sql = "SP_INSERT_CLIENTEP @ID, @NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO";
+            string sql = "SP_INSERT_CLIENTEP @NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO";
             SqlParameter pamnombre = new SqlParameter("@NOMBRE", nombrecliente);
             SqlParameter pamtlf = new SqlParameter("@TLF", tlf);
             SqlParameter pamemail = new SqlParameter("@EMAIL", email);
@@ -73,11 +73,6 @@ namespace ProyectoERP.Repositories
         }
 
         public async Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IRepo.DeleteClienteP(int id)
         {
             throw new NotImplementedException();
         }

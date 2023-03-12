@@ -13,7 +13,7 @@ namespace ProyectoERP.Controllers
         }
         public IActionResult Index(int? idinteresado)
         {
-            List<string> cursos = this.repo.GetCursos();
+            List<Curso> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
             List<ClientePotencial> clientes = this.repo.GetClientesP();
             if (idinteresado != null)
@@ -27,15 +27,24 @@ namespace ProyectoERP.Controllers
         [HttpPost]
         public IActionResult Index(string curso)
         {
-            List<string> cursos = this.repo.GetCursos();
+            List<Curso> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
             List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
             return View(clientes);
         }
+        //Es obligatorio poner este iaction?
+        //public IActionResult InsertarCliente()
+        //{
+        //    return View("Index");
+        //}
 
-        public IActionResult _InsertarCliente()
+        [HttpPost]
+        public IActionResult InsertarCliente(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
         {
-            return View("_InsertarCliente", new ClientePotencial());
+            this.repo.InsertClienteP(nombrecliente, tlf, email, comentarios, codcurso);
+            return RedirectToAction("Index");
         }
+
+        //Enviar correo
     }
 }

@@ -16,6 +16,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BaseOutputPath>C:\Users\Sara Álvarez\Desktop\FULLSTACK\NETCORE\ProyectoERP\ProyectoERP\bin</BaseOutputPath>
   </PropertyGroup>
 
 </Project>
