@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
+using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 #region VISTAS
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -27,9 +28,39 @@ namespace ProyectoERP.Repositories
     public class RepositoryERPSql : IRepo
     {
         private ErpContext context;
-        public RepositoryERPSql(ErpContext context)
+        private HelperAuth helperAuth;
+
+        public RepositoryERPSql(ErpContext context, HelperAuth helperAuth)
         {
             this.context = context;
+            this.helperAuth = helperAuth;
+        }
+        public Usuario LoginUser(string username, string clave)
+        {
+            Usuario user = this.context.Usuarios.FirstOrDefault(x => x.NombreUsuario == username);
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                //Recuperar password cifrado de la bbd
+                byte[] claveuser = user.Clave;
+                //Debemos cifrar de nuevo el password de usuario
+                //junto a su salt utilizando la misma tecnica
+                string salt = user.Salt;
+                byte[] temp = HelperAuth.EncriptarClave(clave, salt);
+                bool respuesta = HelperAuth.CompararClaves(claveuser, temp);
+                if (respuesta == true)
+                {
+                    //GUARDAR SESION AQUÍ
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
         public List<ClientePotencial> FindClientesP(string curso)
         {
