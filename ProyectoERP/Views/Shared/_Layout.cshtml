@@ -269,11 +269,12 @@
             <ul id="dropdown-auth" class="hidden py-2 space-y-2">
               <li>
 @*                <a href="https://flowbite-admin-dashboard.vercel.app/authentication/sign-in/" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Sign in</a>
-*@                @Html.ActionLink("Sign In", "Index", "Login", new { area = "" }, new { @class = "nav-link text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700" })
+*@                @Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700" })
             </li>
               <li>
-                <a href="https://flowbite-admin-dashboard.vercel.app/authentication/sign-up/" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Sign up</a>
-              </li>
+@*                <a href="https://flowbite-admin-dashboard.vercel.app/authentication/sign-in/" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Sign in</a>
+*@                @Html.ActionLink("Registrarse", "Register", "Login", new { area = "" }, new { @class = "nav-link text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700" })
+            </li>
               <li>
                 <a href="https://flowbite-admin-dashboard.vercel.app/authentication/forgot-password/" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Forgot password</a>
               </li>
@@ -303,7 +304,6 @@
 <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
   
   <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-@*  AQUI IRIA LA MAIN*@
     @RenderBody()
   </div>
 

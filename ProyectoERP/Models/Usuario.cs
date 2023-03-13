@@ -17,9 +17,14 @@ namespace ProyectoERP.Models
         //Los tipos varbinary, clob, blob
         //son convertidos automaticamente a byte[]
         //por entity framework
-        public byte[] Clave { get; set; }
-        //[Column("SALT")]
-        //public string Salt { get; set;}
+        public string Clave { get; set; }
+        [Column("CLAVEENCRIP")]
+        //Los tipos varbinary, clob, blob
+        //son convertidos automaticamente a byte[]
+        //por entity framework
+        public byte[] ClaveEncrip { get; set; }
+        [Column("SALT")]
+        public string Salt { get; set; }
         [Column("ROL")]
         public string Rol { get; set; }
         [Column("FOTO")]

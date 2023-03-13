@@ -4,7 +4,9 @@ namespace ProyectoERP.Repositories
 {
     public interface IRepo
     {
-        Usuario LoginUser(string username, string clave);
+        Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto);
+        Task RegisterUser(string nombreusuario, string email, string clave, string rol);
+        Usuario LoginUser(string nombreusuario, string clave);
         List<ClientePotencial> GetClientesP();
         List<Curso> GetCursos();
         List<ClientePotencial> FindClientesP(string curso);

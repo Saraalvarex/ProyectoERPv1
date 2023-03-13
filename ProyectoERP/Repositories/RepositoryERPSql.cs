@@ -28,16 +28,61 @@ namespace ProyectoERP.Repositories
     public class RepositoryERPSql : IRepo
     {
         private ErpContext context;
-        private HelperAuth helperAuth;
 
-        public RepositoryERPSql(ErpContext context, HelperAuth helperAuth)
+        public RepositoryERPSql(ErpContext context)
         {
             this.context = context;
-            this.helperAuth = helperAuth;
         }
-        public Usuario LoginUser(string username, string clave)
+        private int GetMaxIdUsuario()
         {
-            Usuario user = this.context.Usuarios.FirstOrDefault(x => x.NombreUsuario == username);
+            if (this.context.Usuarios.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return this.context.Usuarios.Max(x => x.IdUsuario) + 1;
+            }
+        }
+
+        public async Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto)
+        {
+                Usuario user = new Usuario();
+                user.IdUsuario = this.GetMaxIdUsuario();
+                user.NombreUsuario = nombreusuario;
+                user.Email = email;
+                user.Rol = rol;
+                user.Foto = foto;
+                //Cada usuario tendrá un salt diferente
+                user.Salt = HelperAuth.GenerarSalt();
+                //Clave sin cifrar
+                user.Clave = clave;
+                //Ciframos clave con su salt
+                user.ClaveEncrip = HelperAuth.EncriptarClave(clave, user.Salt);
+                this.context.Usuarios.Add(user);
+                await this.context.SaveChangesAsync();
+        }
+        //SIN FOTO
+        public async Task RegisterUser(string nombreusuario, string email, string clave, string rol)
+        {
+            Usuario user = new Usuario();
+            user.IdUsuario = this.GetMaxIdUsuario();
+            user.NombreUsuario = nombreusuario;
+            user.Email = email;
+            user.Rol = rol;
+            user.Foto = null;
+            //Cada usuario tendrá un salt diferente
+            user.Salt = HelperAuth.GenerarSalt();
+            //Clave sin cifrar
+            user.Clave = clave;
+            //Ciframos clave con su salt
+            user.ClaveEncrip = HelperAuth.EncriptarClave(clave, user.Salt);
+            this.context.Usuarios.Add(user);
+            await this.context.SaveChangesAsync();
+        }
+        public Usuario LoginUser(string nombreusuario, string clave)
+        {
+            Usuario user = this.context.Usuarios.FirstOrDefault(x => x.NombreUsuario == nombreusuario);
             if (user == null)
             {
                 return null;
@@ -45,10 +90,10 @@ namespace ProyectoERP.Repositories
             else
             {
                 //Recuperar password cifrado de la bbd
-                byte[] claveuser = user.Clave;
+                byte[] claveuser = user.ClaveEncrip;
                 //Debemos cifrar de nuevo el password de usuario
                 //junto a su salt utilizando la misma tecnica
-                string salt = HelperAuth.GenerarSalt();
+                string salt = user.Salt;
                 byte[] temp = HelperAuth.EncriptarClave(clave, salt);
                 bool respuesta = HelperAuth.CompararClaves(claveuser, temp);
                 if (respuesta == true)
