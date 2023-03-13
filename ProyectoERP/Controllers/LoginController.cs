@@ -46,9 +46,9 @@ namespace ProyectoERP.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string clave)
+        public async Task<IActionResult> Login(string nombreusuario, string clave)
         {
-            Usuario user = this.repo.LoginUser(username, clave);
+            Usuario user = this.repo.LoginUser(nombreusuario, clave);
             if (user == null)
             {
                 ViewBag.MENSAJE = "Credenciales incorrectas";
@@ -57,7 +57,8 @@ namespace ProyectoERP.Controllers
             else
             {
                 //return View(user);
-                return RedirectToAction("Index", "Home", user);
+                ViewBag.MENSAJE = "Credenciales correctas";
+                return RedirectToAction("Index", "Home");
             }
         }
         public IActionResult ForgotPassword()
