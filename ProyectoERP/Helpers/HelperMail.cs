@@ -22,6 +22,23 @@ namespace ProyectoERP.Helpers
             mailMessage.IsBodyHtml = true;
             return mailMessage;
         }
+
+        //private List<MailMessage> ConfigureMailMessages(string[] para, string asunto, string mensaje)
+        //{
+        //    List<MailMessage> mailMessages = new List<MailMessage>();
+        //    for (int i = 0; i <= para.Length; i++)
+        //    {
+        //        MailMessage mailMessage = new MailMessage();
+        //        string email = this.config.GetValue<string>("MailSettings:Credentials:user");
+        //        mailMessage.From = new MailAddress(email);
+        //        mailMessage.To.Add(new MailAddress(para[i]));
+        //        mailMessage.Subject = asunto;
+        //        mailMessage.Body = mensaje;
+        //        mailMessage.IsBodyHtml = true;
+        //        mailMessages.Add(mailMessage);
+        //    }
+        //    return mailMessages;
+        //}
         private SmtpClient ConfigureSmtpClient()
         {
             string user = this.config.GetValue<string>("MailSettings:Credentials:User");
@@ -45,6 +62,16 @@ namespace ProyectoERP.Helpers
             MailMessage mail = this.ConfigureMailMessage(para, asunto, mensaje);
             SmtpClient client = this.ConfigureSmtpClient();
             await client.SendMailAsync(mail);
+        }
+        public async Task SendMailAsync
+            (string[] para, string asunto, string mensaje)
+        {
+            for (int i = 0; i <= para.Length; i++)
+            {
+                MailMessage mail = this.ConfigureMailMessage(para[i], asunto, mensaje);
+                SmtpClient client = this.ConfigureSmtpClient();
+                await client.SendMailAsync(mail);
+            }
         }
         //Factura?¿
         public async Task SendMailAsync

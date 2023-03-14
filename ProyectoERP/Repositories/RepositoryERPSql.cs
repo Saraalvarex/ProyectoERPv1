@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
-#region VISTAS
+
+#region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
 //AS
 //SELECT I.IDINTERESADO, I.NOMBRE, I.TLF, I.EMAIL, I.COMENTARIOS, C.NOMBRE AS CURSO
@@ -12,8 +13,7 @@ using ProyectoERP.Models;
 //GO
 
 //SELECT * FROM V_INTERESADOS_CURSOS
-#endregion
-#region PROCEDURES
+
 //CREATE PROCEDURE SP_INSERT_CLIENTEP
 //(@NOMBRE NVARCHAR(50), @TLF NVARCHAR(10), @EMAIL NVARCHAR(50),
 //@COMENTARIOS NVARCHAR(100), @CODCURSO NVARCHAR(5))
@@ -23,6 +23,7 @@ using ProyectoERP.Models;
 //	@NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO)
 //GO
 #endregion
+
 namespace ProyectoERP.Repositories
 {
     public class RepositoryERPSql : IRepo
