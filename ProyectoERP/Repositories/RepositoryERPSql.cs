@@ -130,6 +130,10 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToList();
         }
+        public async Task<List<Alumno>> GetAlumnos()
+        {
+            return await this.context.Alumnos.ToListAsync();
+        }
 
         public List<Curso> GetCursos()
         {

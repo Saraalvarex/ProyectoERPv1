@@ -1,17 +1,14 @@
-﻿if ((document.querySelector('#checkbox-all').checked) == true) {
-    document.querySelectorAll('input[type=checkbox]').forEach(function (checkElement) {
-        checkElement.checked = true;
-    });
-} else {
-    document.querySelectorAll('input[type=checkbox]').forEach(function (checkElement) {
-        checkElement.checked = false;
-    });
-}
-
-//function checkAll() {
-//    document.querySelectorAll('#formElement input[type=checkbox]').forEach(function (checkElement) {
-//        checkElement.checked = true;
-//    });
-//}
-
+﻿var miCheckbox = document.getElementById("checkbox-all");
+var checkboxes = document.querySelectorAll('input[type=checkbox]');
+miCheckbox.addEventListener("change", function () {
+    if (miCheckbox.checked) {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+        });
+    } else {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+    }
+});
     
