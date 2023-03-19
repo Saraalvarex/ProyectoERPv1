@@ -38,8 +38,8 @@
                 <label for="users-search" class="sr-only">Cursos</label>
                 <div class="relative mt-1 lg:w-64 xl:w-96">
                 <label for="settings-curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
-                <select id="settings-curso" name="curso" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                  <option value="" selected>-</option>
+                            <select id="settings-curso" name="curso" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                <option value="" disabled selected>-</option>
                     @foreach (Curso curso in cursos)
                             {
                                 <option value="@curso.NombreCurso">@curso.NombreCurso</option>
@@ -57,9 +57,9 @@
                     <a href="#" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                     </a>
-                    <a href="#" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                    </a>
+                    <button id="dropdownComment3Button" data-dropdown-toggle="dropdownComment3" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                    </button>
                 </div>
             </div>
             <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
@@ -114,7 +114,7 @@
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
-                                    <input aria-describedby="checkbox" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                    <input aria-describedby="checkbox" type="checkbox" data-id="@cliente.IdInteresado" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="checkbox" class="sr-only">checkbox</label>
                                 </div>
                             </td>
@@ -128,13 +128,16 @@
                             <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">@cliente.Tlf</td>
                             <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">@cliente.Comentarios</td>
                             <td class="p-4 space-x-2 whitespace-nowrap">
-                                <a 
-                                    asp-action="Index"
+                                <a asp-action="Index"
                                     asp-controller="ClientesPotenciales"
                                     asp-route-idinteresado="@cliente.IdInteresado"
                                     style="cursor:pointer"
-                                    id="enviarCorreoButton" data-drawer-target="drawer-enviar-correo-default" data-drawer-show="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+                                    id="enviarCorreoButton" data-drawer-target="drawer-enviar-correo-default" data-drawer-show="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" data-drawer-placement="right"
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
+                                    </svg>
                                     Enviar correo
                                 </a>
                                 @*<button type="button" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
@@ -176,10 +179,10 @@
     @if (clientePotencial != null)
     {
         <div id="drawer-enviar-correo-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none" tabindex="-1" aria-labelledby="drawer-label" aria-modal="true" role="dialog">
-            <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Update Product</h5>
+            <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Enviar correo</h5>
             <button type="button" data-drawer-dismiss="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                <span class="sr-only">Close menu</span>
+                <span class="sr-only">Cerrar menú</span>
             </button>
                 <form asp-controller="ClientesPotenciales" asp-action="SendMail" method="post">
                 <div class="space-y-4">
@@ -298,6 +301,32 @@
         </div>
     </div>
 </div>
+<!-- Dropdowm menu 3 botones -->
+<div id="dropdownComment3" class="z-10 bg-white divide-y divide-gray-100 rounded shadow w-36 dark:bg-gray-700 dark:divide-gray-600 hidden" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(692px, 1816px);" data-popper-placement="bottom">
+    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+        <li>
+            @*<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Enviar correos masivos</a>*@
+            <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                asp-action="Index"
+                asp-controller="ClientesPotenciales"
+                asp-route-idinteresado="1"
+                style="cursor:pointer"
+                id="enviarCorreoButton"
+                data-drawer-target="drawer-enviar-correo-default"
+                data-drawer-show="drawer-enviar-correo-default"
+                aria-controls="drawer-enviar-correo-default"
+                data-drawer-placement="right">
+                Enviar correos masivos
+            </a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+        </li>
+    </ul>
+</div>
 </main>
 
 <script>
@@ -308,10 +337,10 @@
         formElement.submit();
     });
 
-    var miCheckbox = document.getElementById("checkbox-all");
-    var checkboxes = document.querySelectorAll('input[type=checkbox]');
-    miCheckbox.addEventListener("change", function () {
-        if (miCheckbox.checked) {
+    const checkboxAll = document.getElementById('checkbox-all'');
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxAll.addEventListener('change', function () {
+        if (checkboxAll.checked) {
             checkboxes.forEach(function (checkbox) {
                 checkbox.checked = true;
             });
@@ -321,6 +350,12 @@
             });
         }
     });
+
+    @*const checkboxes = document.querySelectorAll('.cliente-checkbox:checked');
+    const idsinteresados = [];
+    checkboxes.forEach((checkbox) => {
+        idsinteresados.push(checkbox.getAttribute('data-id'));
+    });*@
 
 </script>
 
