@@ -328,7 +328,6 @@
     </ul>
 </div>
 </main>
-
 <script>
     const selectElement = document.getElementById('settings-curso');
     const formElement = document.getElementById('selectCursos');
@@ -337,7 +336,7 @@
         formElement.submit();
     });
 
-    const checkboxAll = document.getElementById('checkbox-all'');
+    const checkboxAll = document.getElementById('checkbox-all');
     const checkboxes = document.querySelectorAll('input[type=checkbox]');
     checkboxAll.addEventListener('change', function () {
         if (checkboxAll.checked) {
@@ -350,13 +349,6 @@
             });
         }
     });
-
-    @*const checkboxes = document.querySelectorAll('.cliente-checkbox:checked');
-    const idsinteresados = [];
-    checkboxes.forEach((checkbox) => {
-        idsinteresados.push(checkbox.getAttribute('data-id'));
-    });*@
-
 </script>
 
 
