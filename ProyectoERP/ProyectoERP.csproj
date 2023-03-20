@@ -7,6 +7,12 @@
 	<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
 	<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
 </ItemGroup>
+<ItemGroup>
+  <Folder Include="wwwroot\archivos\facturas\" />
+  <Folder Include="wwwroot\archivos\fotosalumnos\" />
+  <Folder Include="wwwroot\archivos\fotosusuarios\" />
+  <Folder Include="wwwroot\archivos\" />
+</ItemGroup>
 
 <Target Name="Tailwind" BeforeTargets="Build">
 	<Exec Command="npm run css:build" />

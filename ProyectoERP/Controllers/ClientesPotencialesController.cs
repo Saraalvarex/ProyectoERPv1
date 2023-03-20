@@ -15,7 +15,7 @@ namespace ProyectoERP.Controllers
             this.repo = repo;
             this.helperMail = helperMail;
         }
-        public IActionResult Index(int? idinteresado)
+        public IActionResult Index(int? idinteresado, string? correos)
         {
             List<Curso> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
@@ -25,8 +25,25 @@ namespace ProyectoERP.Controllers
                 ClientePotencial cliente = this.repo.GetCliente(idinteresado.Value);
                 ViewBag.CLIENTE = cliente;
             }
+            if (correos != null)
+            {
+                string[] correosArray = correos.Split(',');
+                ViewBag.CORREOS = correosArray;
+            }
             return View(clientes);
         }
+        //public IActionResult MailMasivo(string? correos)
+        //{
+        //    List<Curso> cursos = this.repo.GetCursos();
+        //    ViewBag.CURSOS = cursos;
+        //    List<ClientePotencial> clientes = this.repo.GetClientesP();
+        //    if (correos != null)
+        //    {
+        //        string[] correosArray = correos.Split(',');
+        //        ViewBag.CORREOS = correosArray;
+        //    }
+        //    return RedirectToAction("Index", clientes);
+        //}
 
         [HttpPost]
         public IActionResult Index(string curso)
@@ -36,16 +53,15 @@ namespace ProyectoERP.Controllers
             List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
             return View(clientes);
         }
-        //Es obligatorio poner este iaction?
         public IActionResult InsertarCliente()
         {
             return View("Index");
         }
 
         [HttpPost]
-        public IActionResult InsertarCliente(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
+        public async Task<IActionResult> InsertarCliente(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
         {
-            this.repo.InsertClienteP(nombrecliente, tlf, email, comentarios, codcurso);
+            await this.repo.InsertClienteP(nombrecliente, tlf, email, comentarios, codcurso);
             return RedirectToAction("Index");
         }
 
