@@ -11,6 +11,7 @@ namespace ProyectoERP.Repositories
         List<Curso> GetCursos();
         List<ClientePotencial> FindClientesP(string curso);
         ClientePotencial GetCliente(int id);
+        Task <List<Grupo>> GetGrupos();
         Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso);
         Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios);
     }

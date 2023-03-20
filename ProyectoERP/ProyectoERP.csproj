@@ -9,9 +9,6 @@
 </ItemGroup>
 <ItemGroup>
   <Folder Include="wwwroot\archivos\facturas\" />
-  <Folder Include="wwwroot\archivos\fotosalumnos\" />
-  <Folder Include="wwwroot\archivos\fotosusuarios\" />
-  <Folder Include="wwwroot\archivos\" />
 </ItemGroup>
 
 <Target Name="Tailwind" BeforeTargets="Build">

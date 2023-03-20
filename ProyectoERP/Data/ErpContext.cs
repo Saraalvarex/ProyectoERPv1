@@ -11,6 +11,7 @@ namespace ProyectoERP.Data
         public DbSet<ClientePotencial> ClientesPotenciales { get; set; }
         public DbSet<Alumno> Alumnos { get; set; }
         public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Grupo> Grupos { get; set; }
     }
     
 }

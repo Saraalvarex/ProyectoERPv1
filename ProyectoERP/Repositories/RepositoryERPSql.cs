@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
+using System.Diagnostics.Metrics;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -24,10 +25,12 @@ using ProyectoERP.Models;
 //GO
 
 //PARA VISTA GRUPOS. PENDIENTE VER SI HAGO PAGINACION Y NO HAGO VISTA
-//SELECT G.CODGRUPO, A.NOMBRE AS ALUMNO, C.NOMBRE AS CURSO,
+//ALTER VIEW V_GRUPOS
+//AS
+//SELECT G.CODGRUPO, C.NOMBRE AS CURSO,
 //G.CODTURNO AS TURNO, G.DIAS, G.FECHAINICIO FROM GRUPOS G
-//INNER JOIN ALUMNOS A ON G.IDALUMNO = A.IDALUMNO
 //INNER JOIN CURSOS C ON C.CODCURSO = G.CODCURSO
+//GO
 
 //PARA VISTA ALUMNOS.
 //SELECT AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.MONTOPAGADO AS PAGADO,
@@ -38,7 +41,6 @@ using ProyectoERP.Models;
 //INNER JOIN CURSOS C ON C.CODCURSO = G.CODCURSO
 //WHERE AG.CODGRUPO='G002'
 //GROUP BY AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.MONTOPAGADO;
-
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -159,6 +161,12 @@ namespace ProyectoERP.Repositories
             return cursos.ToList();
         }
 
+        public async Task<List<Grupo>> GetGrupos()
+        {
+            var grupos = from datos in this.context.Grupos
+                         select datos;
+            return grupos.ToList();
+        }
         public async Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
         {
             string sql = "SP_INSERT_CLIENTEP @NOMBRE, @TLF, @EMAIL, @COMENTARIOS, @CODCURSO";

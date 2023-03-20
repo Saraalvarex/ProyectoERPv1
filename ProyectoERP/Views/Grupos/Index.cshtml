@@ -1,4 +1,9 @@
-﻿<main>
+﻿@model List<Grupo>
+@{
+    ViewData["Title"] = "Index Grupos";
+    List<Curso> cursos = ViewBag.CURSOS as List<Curso>;
+}
+<main>
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
         <div class="w-full mb-1">
             <div class="mb-3">
@@ -24,29 +29,47 @@
                         </li>
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All users</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Grupos</h1>
             </div>
             <div class="flex flex-wrap gap-3">
                 <div class="w-full sm:w-auto mx-3 mb-6">
-                    <label for="settings-language" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código de grupo</label>
-                    <label for="codgrupo-search" class="sr-only">Código de grupo</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="codgrupo" id="codgrupo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Código de grupo">
-                    </div>
+                    <form method="post">
+                        <label for="settings-codgrupo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código de grupo</label>
+                        <label for="codgrupo-search" class="sr-only">Código de grupo</label>
+                        <div class="relative mt-1 lg:w-64 xl:w-96">
+                        <select id="settings-curso" name="codgrupo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Código de grupo" required>
+                            <option value="" disabled selected>-</option>
+                            @foreach (Grupo grupo in Model)
+                            {
+                                <option value="@grupo.CodGrupo">@grupo.CodGrupo</option>
+                            }
+                        </select>
+                        </div>
+                    </form>
                 </div>
                 <div class="w-full sm:w-auto mx-3 mb-6">
-                    <label for="settings-language" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
-                    <label for="nombre-curso-search" class="sr-only">Curso</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="nombrecurso" id="nombrecurso" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Curso">
-                    </div>
+                    <form method="post">
+                        <label for="settings-curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
+                        <label for="curso-search" class="sr-only">Curso</label>
+                        <div class="relative mt-1 lg:w-64 xl:w-96">
+                            <select id="settings-curso" name="curso" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Curso">
+                                <option value="" disabled selected>-</option>
+                                @foreach (Curso curso in cursos)
+                                {
+                                    <option value="@curso.CodCurso">@curso.NombreCurso</option>
+                                }
+                            </select>
+                        </div>
+                    </form>
                 </div>
                 <div class="w-full sm:w-auto mx-3 mb-6">
-                    <label for="settings-language" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de inicio</label>
-                    <label for="fecha-search" class="sr-only">Fecha de inicio</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="fechainicio" id="fechainicio" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Curso">
-                    </div>
+                    <form method="post">
+                        <label for="settings-fechainicio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de inicio</label>
+                        <label for="fecha-search" class="sr-only">Fecha de inicio</label>
+                        <div class="relative mt-1 lg:w-64 xl:w-96">
+                            <input type="date" name="fechainicio" id="fechainicio" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Fecha">
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="sm:flex">
@@ -67,56 +90,43 @@
                     <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
-                                <th scope="col" class="p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-all" class="sr-only">checkbox</label>
-                                    </div>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Grupo
                                 </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Name
+                                    Curso
                                 </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Biography
+                                    Turno
                                 </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Position
+                                    Dias
                                 </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Country
+                                    Fecha de inicio
                                 </th>
-                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Status
-                                </th>
-                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                @*<th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     Actions
-                                </th>
+                                </th>*@
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    @if (Model != null)
+                    {
+                    <tbody id="tbodyGrupos" class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                        @foreach (Grupo grupo in Model)
+                        {
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-20" aria-describedby="checkbox-1" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-20" class="sr-only">checkbox</label>
-                                    </div>
-                                </td>
-                                <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                    <img class="w-10 h-10 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/robert-brown.png" alt="Robert Brown avatar">
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <div class="text-base font-semibold text-gray-900 dark:text-white">Robert Brown</div>
-                                        <div class="text-sm font-normal text-gray-500 dark:text-gray-400">robert.brown@flowbite.com</div>
-                                    </div>
-                                </td>
-                                <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">I love working with React and Flowbites to create efficient and user-friendly interfaces. In my spare time, I enjoys baking, hiking, and spending time with my family.</td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">Laravel developer</td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">Russia</td>
-                                <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@grupo.CodGrupo</td>
+                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@grupo.Curso</td>
+                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@grupo.Turno</td>
+                                <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">@grupo.Dias</td>
+@*                                <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="flex items-center">
                                         <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div>  Active
                                     </div>
-                                </td>
-                                <td class="p-4 space-x-2 whitespace-nowrap">
+                                </td>*@
+                                <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">@grupo.FechaInicio.ToString()</td>
+                                @*<td class="p-4 space-x-2 whitespace-nowrap">
                                     <button type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                                         Edit user
@@ -125,15 +135,17 @@
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                         Delete user
                                     </button>
-                                </td>
+                                </td>*@
                             </tr>
+                            }
                         </tbody>
+                        }
                     </table>
                 </div>
             </div>
         </div>
     </div>
-@*FIN TABLA ALUMNOS*@
+@*FIN TABLA GRUPOS*@
 <div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
     <div class="flex items-center mb-4 sm:mb-0">
         <a href="#" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -172,7 +184,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form action="#">
+                <form method="post">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
                             <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
@@ -203,12 +215,12 @@
                             <textarea id="biography" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="👨&zwj;💻Full-stack web developer. Open-source contributor.">👨&zwj;💻Full-stack web developer. Open-source contributor.</textarea>
                         </div>
                     </div> 
-                </form></div>
+                </form>
+                </div>
                 <!-- Modal footer -->
                 <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
                     <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">Save all</button>
                 </div>
-
         </div>
     </div>
 </div>
