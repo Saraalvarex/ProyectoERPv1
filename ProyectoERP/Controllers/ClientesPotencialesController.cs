@@ -2,7 +2,6 @@
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
-using static NuGet.Packaging.PackagingConstants;
 
 namespace ProyectoERP.Controllers
 {
@@ -10,10 +9,12 @@ namespace ProyectoERP.Controllers
     {
         private IRepo repo;
         private HelperMail helperMail;
+        //private HelperPathProvider helperPath;
         public ClientesPotencialesController(IRepo repo, HelperMail helperMail)
         {
             this.repo = repo;
             this.helperMail = helperMail;
+            //this.helperPath = helperPath;
         }
         public IActionResult Index(int? idinteresado, string? correos)
         {

@@ -1,5 +1,6 @@
 ﻿@model List<ClientePotencial>
 @{
+    ViewData["Title"] = "Index Clientes Potenciales";
     List<Curso> cursos = ViewBag.CURSOS as List<Curso>;
     List<string> correos = ViewBag.CORREOS as List<string>;
     ClientePotencial clientePotencial = ViewBag.CLIENTE;
@@ -396,7 +397,6 @@
     });
 
     document.getElementById("enviarCorreosButton").addEventListener("click", function () {
-
         var checkboxes = document.querySelectorAll(".checkbox-email:checked");
 
         var correos = Array.from(checkboxes).map(function (checkbox) {
@@ -409,5 +409,23 @@
         url += "?correos=" + correosSeparadosPorComas;
         document.getElementById("enviarCorreosButton").setAttribute("href", url);
     });
- 
+
+
 </script>
+@section Scripts {
+    <script>
+        //$("#enviarCorreoButton").click(function () {
+        //    var checkboxes = $(".checkbox-email:checked");
+        //    var correos = checkboxes.map(function () {
+        //        return $(this).data("email");
+        //    }).get().join(",");
+        //    var request = "/ClientesPotenciales/Index?correos=" + correos;
+        //    $("#drawer-enviar-correo-default").load(request);
+        //});
+
+        //function llamaPagina(posicion, idproducto) {
+        //    var request = "/Zapatillas/_PaginadoPartial?idproducto=" + idproducto + "&posicion=" + posicion;
+        //    $("#contenidoajax").load(request);
+        //}
+    </script>
+ }
