@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Index Clientes Potenciales";
     List<Curso> cursos = ViewBag.CURSOS as List<Curso>;
-    List<string> correos = ViewBag.CORREOS as List<string>;
+    //List<string> correos = ViewBag.CORREOS as List<string>;
+    //string destinatarios = string.Join(",", correos);
+    string correos = (string)ViewBag.CORREOS as string;
     ClientePotencial clientePotencial = ViewBag.CLIENTE;
 }
 
@@ -183,7 +185,10 @@
     <div id="drawer-enviar-correo-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none" tabindex="-1" aria-labelledby="drawer-label" aria-modal="true" role="dialog">
         <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Enviar correo</h5>
         <button type="button" data-drawer-dismiss="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+                </path>
+                </svg>
             <span class="sr-only">Cerrar menú</span>
         </button>
             <form asp-controller="ClientesPotenciales" asp-action="SendMail" method="post">
@@ -207,7 +212,7 @@
                 </div>
                 <div>
                     <label for="mensaje" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mensaje</label>
-                    <textarea name="mensaje" id="mensaje" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter event description here">Hola @clientePotencial.NombreCliente. Abrimos nueva convocatoria para el curso de @clientePotencial.Curso el día 10/05/2023. Saludos</textarea>
+                    <textarea name="mensaje" id="mensaje" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Mensaje">Hola @clientePotencial.NombreCliente. Abrimos nueva convocatoria para el curso de @clientePotencial.Curso el día 10/05/2023. Saludos</textarea>
                 </div>
             </div>
             <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
@@ -222,19 +227,44 @@
         </form>
     </div>
 }
+<!-- Dropdowm menu 3 botones -->
+<div id="dropdownComment3" class="z-10 bg-white divide-y divide-gray-100 rounded shadow w-36 dark:bg-gray-700 dark:divide-gray-600 hidden" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(692px, 1816px);" data-popper-placement="bottom">
+    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+        <li>
+            <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                asp-action="Index"
+                asp-controller="ClientesPotenciales"
+                asp-route-correos=""
+                style="cursor:pointer"
+                id="enviarCorreosButton"
+                data-drawer-target="drawer-correos-masivos-default"
+                data-drawer-show="drawer-correos-masivos-default"
+                aria-controls="drawer-correos-masivos-default"
+                data-drawer-placement="right">
+                Enviar correos masivos
+            </a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
+        </li>
+        <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+        </li>
+    </ul>
+</div>
 <!-- Enviar correos masivos DRAWER/MODAL-->
 @if (correos != null)
 {
-    <div id="drawer-enviar-correo-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none" tabindex="-1" aria-labelledby="drawer-label" aria-modal="true" role="dialog">
-        <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Enviar correo</h5>
-        <button type="button" data-drawer-dismiss="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+    <div id="drawer-correos-masivos-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-x-full" tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+        <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Update Product</h5>
+        <button type="button" data-drawer-dismiss="drawer-correos-masivos-default" aria-controls="drawer-correos-masivos-default" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             <span class="sr-only">Cerrar menú</span>
         </button>
-        <form asp-controller="ClientesPotenciales" asp-action="SendMail" method="post">
+        <form asp-controller="ClientesPotenciales" asp-action="SendMails" method="post">
             <div class="space-y-4">
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Destinatario (correo)</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Destinatarios (correo)</label>
                     <input type="email" name="para" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="@correos" placeholder="Correos" required="" multiple>
                 </div>
                 <div>
@@ -250,10 +280,10 @@
                         }
                     </select>
                 </div>
-@*                    <div>
+                <div>
                     <label for="mensaje" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mensaje</label>
-                    <textarea name="mensaje" id="mensaje" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter event description here">Hola @clientePotencial.NombreCliente. Abrimos nueva convocatoria para el curso de @clientePotencial.Curso el día 10/05/2023. Saludos</textarea>
-                </div>*@
+                    <textarea name="mensaje" id="mensaje" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Mensaje">@correos</textarea>
+                </div>
             </div>
             <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
                 <button type="submit" class="w-full justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -268,7 +298,7 @@
     </div>
 }
 <!-- Add Interesad@@ Modal -->
-@using (Html.BeginForm("InsertarCliente", "ClientesPotenciales", FormMethod.Post))
+    @using (Html.BeginForm("InsertarCliente", "ClientesPotenciales", FormMethod.Post))
     {
         <div class="fixed left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full" id="add-interesado-modal">
             <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
@@ -348,84 +378,39 @@
         </div>
     </div>
 </div>
-<!-- Dropdowm menu 3 botones -->
-<div id="dropdownComment3" class="z-10 bg-white divide-y divide-gray-100 rounded shadow w-36 dark:bg-gray-700 dark:divide-gray-600 hidden" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(692px, 1816px);" data-popper-placement="bottom">
-    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
-        <li>
-            <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                asp-action="Index"
-                asp-controller="ClientesPotenciales"
-                asp-route-correos=""
-                style="cursor:pointer"
-                id="enviarCorreosButton"
-                data-drawer-target="drawer-enviar-correo-default"
-                data-drawer-show="drawer-enviar-correo-default"
-                aria-controls="drawer-enviar-correo-default"
-                data-drawer-placement="right">
-                Enviar correos masivos
-            </a>
-        </li>
-        <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
-        </li>
-        <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-        </li>
-    </ul>
-</div>
 </main>
-<script>
-    const selectElement = document.getElementById('settings-curso');
-    const formElement = document.getElementById('selectCursos');
-
-    selectElement.addEventListener('change', function () {
-        formElement.submit();
-    });
-
-    const checkboxAll = document.getElementById('checkbox-all');
-    const checkboxes = document.querySelectorAll('input[type=checkbox]');
-    checkboxAll.addEventListener('change', function () {
-        if (checkboxAll.checked) {
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = true;
-            });
-        } else {
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = false;
-            });
-        }
-    });
-
-    document.getElementById("enviarCorreosButton").addEventListener("click", function () {
-        var checkboxes = document.querySelectorAll(".checkbox-email:checked");
-
-        var correos = Array.from(checkboxes).map(function (checkbox) {
-            return checkbox.getAttribute("data-email");
-        });
-
-        var correosSeparadosPorComas = correos.join(",");
-
-        var url = document.getElementById("enviarCorreosButton").getAttribute("href");
-        url += "?correos=" + correosSeparadosPorComas;
-        document.getElementById("enviarCorreosButton").setAttribute("href", url);
-    });
-
-
-</script>
 @section Scripts {
     <script>
-        //$("#enviarCorreoButton").click(function () {
-        //    var checkboxes = $(".checkbox-email:checked");
-        //    var correos = checkboxes.map(function () {
-        //        return $(this).data("email");
-        //    }).get().join(",");
-        //    var request = "/ClientesPotenciales/Index?correos=" + correos;
-        //    $("#drawer-enviar-correo-default").load(request);
-        //});
+        $(document).ready(function () {
+            $('#settings-curso').change(function () {
+                $('#selectCursos').submit();
+            });
 
-        //function llamaPagina(posicion, idproducto) {
-        //    var request = "/Zapatillas/_PaginadoPartial?idproducto=" + idproducto + "&posicion=" + posicion;
-        //    $("#contenidoajax").load(request);
-        //}
+            $('#checkbox-all').change(function () {
+                $('input[type=checkbox]').prop('checked', $(this).prop('checked'));
+            });
+
+            $("#enviarCorreosButton").click(function (e) {
+                e.preventDefault(); //evita que el enlace se comporte como un enlace normal
+
+                var correos = $(".checkbox-email:checked").map(function () {
+                    return $(this).attr("data-email");
+                }).get().join(",");
+
+                var data = { correos: correos };
+
+                $.ajax({
+                    type: "GET",
+                    url: "/ClientesPotenciales/Index",
+                    data: data,
+                    success: function (response) {
+                        //maneja la respuesta del servidor
+                        //mostrar modal
+                        $("#drawer-correos-masivos-default").removeClass("translate-x-full");
+                    }
+                });
+                
+            });
+        });
     </script>
  }

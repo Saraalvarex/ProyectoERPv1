@@ -28,23 +28,12 @@ namespace ProyectoERP.Controllers
             }
             if (correos != null)
             {
-                string[] correosArray = correos.Split(',');
-                ViewBag.CORREOS = correosArray;
+                //string[] correosArray = correos.Split(',');
+                //ViewBag.CORREOS = new List<string>(correosArray);
+                ViewBag.CORREOS = (string)correos;
             }
             return View(clientes);
         }
-        //public IActionResult MailMasivo(string? correos)
-        //{
-        //    List<Curso> cursos = this.repo.GetCursos();
-        //    ViewBag.CURSOS = cursos;
-        //    List<ClientePotencial> clientes = this.repo.GetClientesP();
-        //    if (correos != null)
-        //    {
-        //        string[] correosArray = correos.Split(',');
-        //        ViewBag.CORREOS = correosArray;
-        //    }
-        //    return RedirectToAction("Index", clientes);
-        //}
 
         [HttpPost]
         public IActionResult Index(string curso)
@@ -76,6 +65,15 @@ namespace ProyectoERP.Controllers
         public async Task<IActionResult> SendMail(string para, string asunto, string mensaje)
         {
             await this.helperMail.SendMailAsync(para, asunto, mensaje);
+            ViewBag.MENSAJE = "Email enviado correctamente";
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendMails(string para, string asunto, string mensaje)
+        {
+            string[] correosarray = para.Split(',');
+            List<string> correos = new List<string>(correosarray);
+            await this.helperMail.SendMailAsync(correos, asunto, mensaje);
             ViewBag.MENSAJE = "Email enviado correctamente";
             return RedirectToAction("Index");
         }
