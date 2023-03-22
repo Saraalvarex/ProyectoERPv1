@@ -35,7 +35,7 @@ using ProyectoERP.Models;
 //CREATE VIEW V_ALUMNOS_PAGOS
 //AS
 //	SELECT AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO,
-//    SUM(C.PRECIO + C.MATRICULA) AS PENDIENTE
+//  SUM(C.PRECIO + C.MATRICULA) AS PENDIENTE
 //	FROM ALUMNOS_GRUPOS AG
 //	INNER JOIN ALUMNOS A ON AG.IDALUMNO = A.IDALUMNO
 //	INNER JOIN GRUPOS G ON G.CODGRUPO = AG.CODGRUPO
@@ -132,6 +132,12 @@ namespace ProyectoERP.Repositories
                 }
             }
         }
+        public List<AlumnoPagos> GetAlumnosPagos()
+        {
+            var grupos = from datos in this.context.AlumnosPagos
+                         select datos;
+            return grupos.ToList();
+        }
         public List<ClientePotencial> FindClientesP(string curso)
         {
             var consulta = from datos in this.context.ClientesPotenciales
@@ -211,5 +217,6 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToListAsync();
         }
+
     }
 }

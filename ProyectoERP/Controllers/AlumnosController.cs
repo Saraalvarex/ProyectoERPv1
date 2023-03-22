@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoERP.Models;
 using ProyectoERP.Repositories;
 
 namespace ProyectoERP.Controllers
@@ -11,9 +12,10 @@ namespace ProyectoERP.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<AlumnoPagos> alumnos = this.repo.GetAlumnosPagos();
+            return View(alumnos);
         }
     }
 }
