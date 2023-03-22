@@ -17,5 +17,7 @@ namespace ProyectoERP.Models
         public string Dias { get; set; }
         [Column("FECHAINICIO")]
         public DateTime FechaInicio { get; set; }
+        [Column("CODCURSO")]
+        public string CodCurso { get; set; }
     }
 }

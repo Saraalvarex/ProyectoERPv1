@@ -26,7 +26,7 @@ using ProyectoERP.Models;
 //PARA VISTA GRUPOS. PENDIENTE VER SI HAGO PAGINACION Y NO HAGO VISTA
 //CREATE VIEW V_GRUPOS
 //AS
-//SELECT G.CODGRUPO, C.NOMBRE AS CURSO,
+//SELECT G.CODGRUPO, C.CODCURSO, C.NOMBRE AS CURSO,
 //G.CODTURNO AS TURNO, G.DIAS, G.FECHAINICIO FROM GRUPOS G
 //INNER JOIN CURSOS C ON C.CODCURSO = G.CODCURSO
 //GO
@@ -40,6 +40,9 @@ using ProyectoERP.Models;
 //INNER JOIN CURSOS C ON C.CODCURSO = G.CODCURSO
 //--WHERE AG.CODGRUPO='G002'
 //GROUP BY AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, AG.MONTOPAGADO;
+
+//SELECT* FROM GRUPOS
+//WHERE FECHAINICIO BETWEEN '2022-06-1' AND GETDATE()
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -182,10 +185,10 @@ namespace ProyectoERP.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Grupo>> FiltroGruposCurso(string curso)
+        public Task<List<Grupo>> FiltroGruposCurso(string codcurso)
         {
             var consulta = from datos in this.context.Grupos
-                           where datos.Curso==curso
+                           where datos.CodCurso==codcurso
                            select datos;
             return consulta.ToListAsync();
         }
