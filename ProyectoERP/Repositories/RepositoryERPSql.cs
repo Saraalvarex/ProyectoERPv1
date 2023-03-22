@@ -181,5 +181,29 @@ namespace ProyectoERP.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<Grupo>> FiltroGruposCurso(string curso)
+        {
+            var consulta = from datos in this.context.Grupos
+                           where datos.Curso==curso
+                           select datos;
+            return consulta.ToListAsync();
+        }
+
+        public Task<Grupo> FiltroGruposCod(string codgrupo)
+        {
+            var consulta = from datos in this.context.Grupos
+                           where datos.CodGrupo == codgrupo
+                           select datos;
+            return consulta.FirstOrDefaultAsync();
+        }
+
+        public Task<List<Grupo>> FiltroGruposFecha(DateTime fechainicio)
+        {
+            var consulta = from datos in this.context.Grupos
+                           where datos.FechaInicio == fechainicio
+                           select datos;
+            return consulta.ToListAsync();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
+using System.Text.RegularExpressions;
 
 namespace ProyectoERP.Controllers
 {
@@ -20,20 +21,27 @@ namespace ProyectoERP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FiltroGrupo()
+        public async Task<IActionResult> FiltroGrupo(string codgrupo)
         {
-            return View();
+            Grupo grupo = await this.repo.FiltroGruposCod(codgrupo);
+            ViewBag.Cursos = this.repo.GetCursos();
+            ViewBag.GRUPO = grupo;
+            return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> FiltroCurso()
+        public async Task<IActionResult> FiltroCurso(string curso)
         {
-            return View();
+            List<Grupo> grupos = await this.repo.FiltroGruposCurso(curso);
+            ViewBag.Cursos = this.repo.GetCursos();
+            return RedirectToAction("Index", grupos);
         }
 
         [HttpPost]
-        public async Task<IActionResult> FiltroFecha()
+        public async Task<IActionResult> FiltroFecha(DateTime fechainicio)
         {
-            return View();
+            List<Grupo> grupos = await this.repo.FiltroGruposFecha(fechainicio);
+            ViewBag.Cursos = this.repo.GetCursos();
+            return RedirectToAction("Index", grupos);
         }
     }
 }
