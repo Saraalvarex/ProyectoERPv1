@@ -9,8 +9,8 @@ namespace ProyectoERP.Controllers
 {
     public class ManagedController : Controller
     {
-        private RepositoryERPSql repo;
-        public ManagedController(RepositoryERPSql repo)
+        private IRepo repo;
+        public ManagedController(IRepo repo)
         {
             this.repo = repo;
         }

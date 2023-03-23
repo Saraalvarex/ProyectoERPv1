@@ -4,7 +4,6 @@ using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using System.Data;
-using System.Diagnostics.Metrics;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS

@@ -28,9 +28,10 @@ namespace ProyectoERP.Controllers
             }
             if (correos != null)
             {
-                //string[] correosArray = correos.Split(',');
-                //ViewBag.CORREOS = new List<string>(correosArray);
-                ViewBag.CORREOS = (string)correos;
+                string[] correosArray = correos.Split(',');
+                ViewBag.CORREOS = new List<string>(correosArray);
+                //string c = correos.ToString();
+                //ViewBag.CORREOS = c;
             }
             return View(clientes);
         }
