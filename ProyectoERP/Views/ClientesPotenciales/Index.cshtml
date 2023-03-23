@@ -122,7 +122,13 @@
                                 <label for="checkbox" class="sr-only">checkbox</label>
                                 </div>
                             </td>
-                            <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                            @if (correos != null)
+                            {
+                                <td>
+                                    <p>@correos</p>
+                                </td>
+                            }
+                                        <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                     <div class="text-base font-semibold text-gray-900 dark:text-white">@cliente.NombreCliente</div>
                                     <div class="text-sm font-normal text-gray-500 dark:text-gray-400">@cliente.Email</div>

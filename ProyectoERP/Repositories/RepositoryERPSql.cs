@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
+using System.Data;
+using System.Diagnostics.Metrics;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -34,8 +36,8 @@ using ProyectoERP.Models;
 //PARA VISTA ALUMNOS.
 //CREATE VIEW V_ALUMNOS_PAGOS
 //AS
-//	SELECT AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO,
-//  SUM(C.PRECIO + C.MATRICULA) AS PENDIENTE
+//SELECT AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO,
+//SUM(C.PRECIO + C.MATRICULA) AS PENDIENTE
 //	FROM ALUMNOS_GRUPOS AG
 //	INNER JOIN ALUMNOS A ON AG.IDALUMNO = A.IDALUMNO
 //	INNER JOIN GRUPOS G ON G.CODGRUPO = AG.CODGRUPO
@@ -43,7 +45,15 @@ using ProyectoERP.Models;
 //	--WHERE AG.CODGRUPO='G002'
 //	GROUP BY AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, C.DURACION, AG.MONTOPAGADO;
 //GO
-
+//ALTER VIEW V_ALUMNOS_PAGOS
+//AS
+//    SELECT DISTINCT AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, C.PRECIO, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO,
+//    (C.PRECIO + C.MATRICULA - AG.MONTOPAGADO) AS PENDIENTE
+//    FROM ALUMNOS_GRUPOS AG
+//    INNER JOIN ALUMNOS A ON AG.IDALUMNO = A.IDALUMNO
+//    INNER JOIN GRUPOS G ON G.CODGRUPO = AG.CODGRUPO
+//    INNER JOIN CURSOS C ON C.CODCURSO = G.CODCURSO;
+//GO
 //SELECT* FROM GRUPOS
 //WHERE FECHAINICIO BETWEEN '2022-06-1' AND GETDATE()
 #endregion
@@ -132,11 +142,14 @@ namespace ProyectoERP.Repositories
                 }
             }
         }
-        public List<AlumnoPagos> GetAlumnosPagos()
+        public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
             var grupos = from datos in this.context.AlumnosPagos
                          select datos;
-            return grupos.ToList();
+            return await grupos.ToListAsync();
+            //string sql = "SP_M";
+            //var consulta = this.context.AlumnosPagos.FromSqlRaw(sql);
+            //return await consulta.ToListAsync();
         }
         public List<ClientePotencial> FindClientesP(string curso)
         {

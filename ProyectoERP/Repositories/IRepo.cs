@@ -17,6 +17,6 @@ namespace ProyectoERP.Repositories
         Task<List<Grupo>> FiltroGruposFecha(DateTime fecha);
         Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso);
         Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios);
-        List<AlumnoPagos> GetAlumnosPagos();
+        Task <List<AlumnoPagos>> GetAlumnosPagos();
     }
 }
