@@ -81,6 +81,14 @@ namespace ProyectoERP.Repositories
             }
         }
 
+        #region Usuarios
+        public async Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario)
+        {
+            var consulta = this.context.Usuarios.Where(x => x.NombreUsuario == nombreusuario && x.IdUsuario == idusuario);
+            return await consulta.FirstOrDefaultAsync();
+        }
+
+        #endregion
         public async Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto)
         {
                 Usuario user = new Usuario();
@@ -148,9 +156,6 @@ namespace ProyectoERP.Repositories
             var grupos = from datos in this.context.AlumnosPagos
                          select datos;
             return await grupos.ToListAsync();
-            //string sql = "SP_M";
-            //var consulta = this.context.AlumnosPagos.FromSqlRaw(sql);
-            //return await consulta.ToListAsync();
         }
         public List<ClientePotencial> FindClientesP(string curso)
         {
