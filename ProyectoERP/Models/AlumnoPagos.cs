@@ -17,6 +17,8 @@ namespace ProyectoERP.Models
         public string NombreAlumno { get; set; }
         [Column("MATRICULA")]
         public decimal Matricula { get; set; }
+        [Column("PRECIO")]
+        public decimal PrecioCurso { get; set; }
         [Column("FINANCIACION")]
         public int Financiacion { get; set; }
         [Column("DURACION")]
