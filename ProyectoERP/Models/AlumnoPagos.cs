@@ -7,6 +7,8 @@ namespace ProyectoERP.Models
     public class AlumnoPagos
     {
         [Key]
+        [Column("IDALUMNO")]
+        public int IdAlumno { get; set; }
         [Column("CODGRUPO")]
         public string CodGrupo { get; set; }
         [Column("FOTO")]
