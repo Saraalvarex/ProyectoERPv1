@@ -230,8 +230,9 @@ namespace ProyectoERP.Repositories
 
         public Task<List<Grupo>> FiltroGruposFecha(DateTime fechainicio)
         {
+            //WHERE FECHAINICIO BETWEEN '2022-06-1' AND GETDATE()
             var consulta = from datos in this.context.Grupos
-                           where datos.FechaInicio == fechainicio
+                           where datos.FechaInicio>=fechainicio
                            select datos;
             return consulta.ToListAsync();
         }
