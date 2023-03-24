@@ -69,6 +69,8 @@ namespace ProyectoERP.Controllers
             ViewBag.MENSAJE = "Email enviado correctamente";
             return RedirectToAction("Index");
         }
+
+        //MailsMasivos
         [HttpPost]
         public async Task<IActionResult> SendMails(string para, string asunto, string mensaje)
         {
@@ -78,13 +80,11 @@ namespace ProyectoERP.Controllers
             ViewBag.MENSAJE = "Email enviado correctamente";
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public async Task<IActionResult> _CorreosMasivos(string para, string asunto, string mensaje)
+        public IActionResult _CorreosMasivos(string correos)
         {
-            string[] correosarray = para.Split(',');
-            List<string> correos = new List<string>(correosarray);
-            await this.helperMail.SendMailAsync(correos, asunto, mensaje);
-            ViewBag.MENSAJE = "Email enviado correctamente";
+            List<Curso> cursos = this.repo.GetCursos();
+            ViewBag.CURSOS = cursos;
+            ViewBag.CORREOS = correos;
             return PartialView("_CorreosMasivos");
         }
     }

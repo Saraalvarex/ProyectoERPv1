@@ -169,11 +169,11 @@ namespace ProyectoERP.Repositories
         }
         public async Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno)
         {
-            string sql = "SP_BUSCAR_ALUMNOS @NOMBRE";
-            SqlParameter pamnombre = new SqlParameter("@NOMBRE", nombrealumno);
-            var consulta = this.context.AlumnosPagos.FromSqlRaw(sql, nombrealumno);
-            List<AlumnoPagos> alumnos = consulta.AsEnumerable().ToList();
+            var alumnos = await this.context.AlumnosPagos
+                                 .Where(a => a.NombreAlumno.Contains(nombrealumno))
+                                 .ToListAsync();
             return alumnos;
+
         }
         public Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio)
         {

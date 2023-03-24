@@ -10,7 +10,7 @@
 	<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
 </ItemGroup>
 <ItemGroup>
-  <Folder Include="wwwroot\archivos\facturas\" />
+  <Folder Include="Views\Cursos\" />
 </ItemGroup>
 
 <Target Name="Tailwind" BeforeTargets="Build">

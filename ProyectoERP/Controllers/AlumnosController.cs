@@ -17,10 +17,18 @@ namespace ProyectoERP.Controllers
             List<AlumnoPagos> alumnos = await this.repo.GetAlumnosPagos();
             return View(alumnos);
         }
-        public async Task<IActionResult> _AlumnosPagos(string nombrealumno)
+
+        public async Task<IActionResult> _AlumnosPagos(string? nombrealumno, DateTime? fecha)
         {
-            List<AlumnoPagos> alumnos = await this.repo.FiltroNombreAlumnoAsync(nombrealumno);
-            ViewBag.Cursos = this.repo.GetCursos();
+            List<AlumnoPagos> alumnos = new List<AlumnoPagos>();
+            if (nombrealumno != null)
+            {
+                alumnos = await this.repo.FiltroNombreAlumnoAsync(nombrealumno);
+            }
+            else if (fecha != null)
+            {
+                alumnos = await this.repo.FiltroAlumnosPagosFecha(fecha.Value);
+            }
             return PartialView("_AlumnosPagos", alumnos);
         }
     }

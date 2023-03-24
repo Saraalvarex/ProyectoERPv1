@@ -27,6 +27,7 @@ namespace ProyectoERP.Controllers
             ViewBag.GRUPO = grupo;
             return PartialView("_Grupo", grupo);
         }
+
         public async Task<IActionResult> _Grupos(string? curso, DateTime? fechainicio)
         {
             List<Grupo> grupos = new List<Grupo>();
