@@ -4,6 +4,7 @@ using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using System.Data;
+using System.Numerics;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -44,11 +45,11 @@ using System.Data;
 //	--WHERE AG.CODGRUPO='G002'
 //	GROUP BY AG.CODGRUPO, A.FOTO, A.NOMBRE, C.MATRICULA, AG.FINANCIACION, C.DURACION, AG.MONTOPAGADO;
 //GO
-//esta es la buena
+//ESTA ES LA BUENA!!1
 //CREATE VIEW V_ALUMNOS_PAGOS
 //AS
-//    SELECT DISTINCT AG.CODGRUPO, A.FOTO, A.IDALUMNO, A.NOMBRE, C.MATRICULA, C.PRECIO, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO,
-//    (C.PRECIO + C.MATRICULA - AG.MONTOPAGADO) AS PENDIENTE
+//    SELECT DISTINCT AG.CODGRUPO, A.FOTO, A.IDALUMNO, A.NOMBRE, C.MATRICULA, C.PRECIO, AG.FINANCIACION, C.DURACION , AG.MONTOPAGADO AS PAGADO, G.FECHAINICIO,
+//(C.PRECIO + C.MATRICULA - AG.MONTOPAGADO) AS PENDIENTE
 //    FROM ALUMNOS_GRUPOS AG
 //    INNER JOIN ALUMNOS A ON AG.IDALUMNO = A.IDALUMNO
 //    INNER JOIN GRUPOS G ON G.CODGRUPO = AG.CODGRUPO
@@ -56,6 +57,12 @@ using System.Data;
 //GO
 //SELECT* FROM GRUPOS
 //WHERE FECHAINICIO BETWEEN '2022-06-1' AND GETDATE()
+//NO METIDO EN MI SCRIPT!!!1
+//CREATE PROCEDURE SP_BUSCAR_ALUMNOS
+// (@NOMBRE NVARCHAR(50))
+// AS
+// SELECT * FROM ALUMNOS WHERE NOMBRE LIKE '%'+@NOMBRE+'%';
+//GO
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -81,13 +88,14 @@ namespace ProyectoERP.Repositories
         }
 
         #region Usuarios
+        #endregion
         public async Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario)
         {
             var consulta = this.context.Usuarios.Where(x => x.NombreUsuario == nombreusuario && x.IdUsuario == idusuario);
             return await consulta.FirstOrDefaultAsync();
         }
 
-        #endregion
+        
         public async Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto)
         {
                 Usuario user = new Usuario();
@@ -150,12 +158,34 @@ namespace ProyectoERP.Repositories
                 }
             }
         }
+        #region AlumnosPagos
+        #endregion
+        //SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
         public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
             var grupos = from datos in this.context.AlumnosPagos
                          select datos;
             return await grupos.ToListAsync();
         }
+        public async Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno)
+        {
+            string sql = "SP_BUSCAR_ALUMNOS @NOMBRE";
+            SqlParameter pamnombre = new SqlParameter("@NOMBRE", nombrealumno);
+            var consulta = this.context.AlumnosPagos.FromSqlRaw(sql, nombrealumno);
+            List<AlumnoPagos> alumnos = consulta.AsEnumerable().ToList();
+            return alumnos;
+        }
+        public Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio)
+        {
+            //AQUI SI DEBERIA PONER PERIODO DE TIEMPO
+            var consulta = from datos in this.context.AlumnosPagos
+                           where datos.FechaInicio >= fechainicio
+                           select datos;
+            return consulta.ToListAsync();
+        }
+
+        #region ClientesPotenciales
+        #endregion
         public List<ClientePotencial> FindClientesP(string curso)
         {
             var consulta = from datos in this.context.ClientesPotenciales

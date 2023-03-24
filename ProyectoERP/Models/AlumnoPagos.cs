@@ -27,6 +27,8 @@ namespace ProyectoERP.Models
         public decimal Pagado { get; set; }
         [Column("PENDIENTE")]
         public decimal Pendiente { get; set; }
-        
+        [Column("FECHAINICIO")]
+        public DateTime FechaInicio { get; set; }
+
     }
 }

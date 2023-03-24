@@ -19,5 +19,6 @@ namespace ProyectoERP.Repositories
         Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios);
         Task <List<AlumnoPagos>> GetAlumnosPagos();
         Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario);
+        Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno);
     }
 }

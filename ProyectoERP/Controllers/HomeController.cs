@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace ProyectoERP.Controllers
 {
+    //[AuthorizeUsuarios]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -14,7 +15,6 @@ namespace ProyectoERP.Controllers
             _logger = logger;
         }
 
-        //[AuthorizeUsuarios]
         public IActionResult Index()
         {
             return View();
