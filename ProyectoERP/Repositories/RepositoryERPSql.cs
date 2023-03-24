@@ -183,6 +183,13 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToListAsync();
         }
+        public Task<List<AlumnoPagos>> FiltroAlumnosPagosGrupoAsync(string codgrupo)
+        {
+            var consulta = from datos in this.context.AlumnosPagos
+                           where datos.CodGrupo == codgrupo
+                           select datos;
+            return consulta.ToListAsync();
+        }
 
         #region ClientesPotenciales
         #endregion

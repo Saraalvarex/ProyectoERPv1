@@ -21,5 +21,6 @@ namespace ProyectoERP.Repositories
         Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario);
         Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio);
+        Task<List<AlumnoPagos>> FiltroAlumnosPagosGrupoAsync(string codgrupo);
     }
 }
