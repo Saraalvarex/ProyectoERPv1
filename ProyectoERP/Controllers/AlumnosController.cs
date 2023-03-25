@@ -12,9 +12,19 @@ namespace ProyectoERP.Controllers
         {
             this.repo = repo;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? nombrealumno, DateTime? fecha)
         {
-            return View();
+            List<AlumnoPagos> alumnos = new List<AlumnoPagos>();
+            alumnos = await this.repo.GetAlumnosPagos();
+            if (nombrealumno != null)
+            {
+                alumnos = await this.repo.FiltroNombreAlumnoAsync(nombrealumno);
+            }
+            else if (fecha != null)
+            {
+                alumnos = await this.repo.FiltroAlumnosPagosFecha(fecha.Value);
+            }
+            return View(alumnos);
         }
 
         public async Task<IActionResult> _AlumnosPagos(string? nombrealumno, DateTime? fecha)
