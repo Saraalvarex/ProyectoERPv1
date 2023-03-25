@@ -230,6 +230,9 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            var request = "/Alumnos/_AlumnosPagos";
+            $("#alumnosparcial").load(request);
+
             $('#settings-nombrealumno').keyup(function () {
                 var nombrealumno = $(this).val();
                 console.log(nombrealumno);

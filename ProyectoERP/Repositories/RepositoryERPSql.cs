@@ -4,7 +4,6 @@ using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using System.Data;
-using System.Numerics;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -57,11 +56,11 @@ using System.Numerics;
 //GO
 //SELECT* FROM GRUPOS
 //WHERE FECHAINICIO BETWEEN '2022-06-1' AND GETDATE()
-//NO METIDO EN MI SCRIPT!!!1
-//CREATE PROCEDURE SP_BUSCAR_ALUMNOS
-// (@NOMBRE NVARCHAR(50))
-// AS
-// SELECT * FROM ALUMNOS WHERE NOMBRE LIKE '%'+@NOMBRE+'%';
+//CREATE PROCEDURE SP_INSERT_GRUPO
+//(@CODGRUPO NVARCHAR(10), @CODCURSO NVARCHAR(5),
+//@CODTURNO NVARCHAR(5), @DIAS NVARCHAR(20), @FECHAINICIO DATE)
+//AS
+//  INSERT INTO GRUPOS VALUES (@CODGRUPO, @CODCURSO, @CODTURNO, @DIAS, @FECHAINICIO)
 //GO
 #endregion
 
@@ -87,15 +86,13 @@ namespace ProyectoERP.Repositories
             }
         }
 
-        #region Usuarios
-        #endregion
+       //USUARIOS
         public async Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario)
         {
             var consulta = this.context.Usuarios.Where(x => x.NombreUsuario == nombreusuario && x.IdUsuario == idusuario);
             return await consulta.FirstOrDefaultAsync();
         }
 
-        
         public async Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto)
         {
                 Usuario user = new Usuario();
@@ -158,8 +155,7 @@ namespace ProyectoERP.Repositories
                 }
             }
         }
-        #region AlumnosPagos
-        #endregion
+        //ALUMNOSPAGOS
         //SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
         public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
@@ -191,8 +187,7 @@ namespace ProyectoERP.Repositories
             return consulta.ToListAsync();
         }
 
-        #region ClientesPotenciales
-        #endregion
+        //CLIENTESPOTENCIALES
         public List<ClientePotencial> FindClientesP(string curso)
         {
             var consulta = from datos in this.context.ClientesPotenciales
@@ -227,11 +222,41 @@ namespace ProyectoERP.Repositories
             return cursos.ToList();
         }
 
+        //GRUPOS
         public async Task<List<Grupo>> GetGrupos()
         {
             var grupos = from datos in this.context.Grupos
                          select datos;
             return grupos.ToList();
+        }
+        private string GetNextCodGrupo()
+        {
+            //Obtener el último código de grupo en la base de datos
+            var lastCodGrupo = context.Grupos
+                .OrderByDescending(g => g.CodGrupo)
+                .FirstOrDefault()?.CodGrupo;
+
+            //Si no hay códigos de grupo, empezar en G001
+            if (string.IsNullOrEmpty(lastCodGrupo))
+            {
+                return "G001";
+            }
+            //Obtener el número del último código de grupo
+            var lastNum = int.Parse(lastCodGrupo.Substring(1));
+            //Incrementar el número en uno y formatear el nuevo código de grupo
+            return $"G{lastNum + 1:D3}";
+        }
+
+        public async Task InsertGrupo(string codcurso, string turno, string dias, string fechainicio)
+        {
+            string sql = "SP_INSERT_GRUPO @CODGRUPO, @CODCURSO, @CODTURNO, @DIAS, @FECHAINICIO";
+            string codgrupo = this.GetNextCodGrupo();
+            SqlParameter pamcodgrupo = new SqlParameter("@CODGRUPO", codgrupo);
+            SqlParameter pamcodcurso = new SqlParameter("@CODCURSO", codcurso);
+            SqlParameter pamcodturno = new SqlParameter("@CODTURNO", turno);
+            SqlParameter pamdias = new SqlParameter("@DIAS", dias);
+            SqlParameter pamfechainicio = new SqlParameter("@FECHAINICIO", fechainicio);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamcodgrupo, pamcodcurso, pamcodturno, pamdias, pamfechainicio);
         }
         public async Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso)
         {
@@ -273,6 +298,5 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToListAsync();
         }
-
     }
 }
