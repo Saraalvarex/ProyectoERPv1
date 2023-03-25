@@ -15,6 +15,7 @@ builder.Services.AddAuthentication(options => {
 // Add services to the container.
 builder.Services.AddSingleton<HelperAuth>();
 builder.Services.AddSingleton<HelperMail>();
+builder.Services.AddSingleton<HelperPathProvider>();
 string connectionString =
     builder.Configuration.GetConnectionString("SqlERP");
 builder.Services.AddTransient<IRepo, RepositoryERPSql>();

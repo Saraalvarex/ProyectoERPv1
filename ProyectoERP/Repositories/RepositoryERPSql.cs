@@ -62,6 +62,7 @@ using System.Data;
 //AS
 //  INSERT INTO GRUPOS VALUES (@CODGRUPO, @CODCURSO, @CODTURNO, @DIAS, @FECHAINICIO)
 //GO
+//SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -156,7 +157,13 @@ namespace ProyectoERP.Repositories
             }
         }
         //ALUMNOSPAGOS
-        //SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
+        public async Task InsertFact(int idalumno, string rutafact)
+        {
+            string sql = "SP_INSERT_FACTURA @IDALUMNO, @FACTURA";
+            SqlParameter pamidalumno = new SqlParameter("@IDALUMNO", idalumno);
+            SqlParameter pamrutafact = new SqlParameter("@FACTURA", rutafact);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamidalumno, pamrutafact);
+        }
         public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
             var grupos = from datos in this.context.AlumnosPagos
@@ -214,7 +221,12 @@ namespace ProyectoERP.Repositories
         {
             return await this.context.Alumnos.ToListAsync();
         }
+        public async Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios)
+        {
+            throw new NotImplementedException();
+        }
 
+        //CURSOS
         public List<Curso> GetCursos()
         {
             var cursos = from datos in this.context.Cursos
@@ -231,7 +243,7 @@ namespace ProyectoERP.Repositories
         }
         private string GetNextCodGrupo()
         {
-            //Obtener el último código de grupo en la base de datos
+            //Obtengo el último código de grupo en la base de datos
             var lastCodGrupo = context.Grupos
                 .OrderByDescending(g => g.CodGrupo)
                 .FirstOrDefault()?.CodGrupo;
@@ -267,11 +279,6 @@ namespace ProyectoERP.Repositories
             SqlParameter pamcomentarios = new SqlParameter("@COMENTARIOS", comentarios);
             SqlParameter pamcodcurso = new SqlParameter("@CODCURSO", codcurso);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamnombre, pamtlf, pamemail, pamcomentarios, pamcodcurso);
-        }
-
-        public async Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<List<Grupo>> FiltroGruposCurso(string codcurso)

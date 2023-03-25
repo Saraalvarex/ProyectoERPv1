@@ -23,5 +23,6 @@ namespace ProyectoERP.Repositories
         Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosGrupoAsync(string codgrupo);
+        Task InsertFact(int idalumno, string rutafact);
     }
 }

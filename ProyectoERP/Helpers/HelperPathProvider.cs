@@ -13,15 +13,15 @@
             string carpeta = "";
             if (folder == Folders.FotosAlumnos)
             {
-                carpeta = "archivos/fotosalumnos";
+                carpeta = "fotosalumnos";
             }
             else if (folder == Folders.FotosUsuarios)
             {
-                carpeta = "archivos/fotosusuarios";
+                carpeta = "fotosusuarios";
             }
             else if (folder == Folders.Facturas)
             {
-                carpeta = "archivos/facturas";
+                carpeta = "facturas";
             }
             string rootPath = this.hostEnvironment.WebRootPath;
             string path = Path.Combine(rootPath, carpeta, fileName);
