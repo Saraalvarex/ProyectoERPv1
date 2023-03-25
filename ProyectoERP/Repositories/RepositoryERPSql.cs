@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
+using System.Collections.Generic;
 using System.Data;
 
 #region VISTAS y PROCEDURES
@@ -63,6 +64,18 @@ using System.Data;
 //  INSERT INTO GRUPOS VALUES (@CODGRUPO, @CODCURSO, @CODTURNO, @DIAS, @FECHAINICIO)
 //GO
 //SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
+
+//CREATE PROCEDURE SP_INSERT_FACTURA
+//(@IDALUMNO INT, @FACTURA NVARCHAR(100), @CODFACTURA INT OUT)
+//AS
+//    DECLARE @MAX_CODFACTURA INT
+//    SET @MAX_CODFACTURA = (SELECT COALESCE(MAX(CODFACTURA), 0) +1 FROM FACTURAS)
+    
+//    INSERT INTO FACTURAS
+//    VALUES (@MAX_CODFACTURA, @IDALUMNO, @FACTURA)
+
+//    SET @CODFACTURA = @MAX_CODFACTURA
+//GO
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -157,18 +170,30 @@ namespace ProyectoERP.Repositories
             }
         }
         //ALUMNOSPAGOS
-        public async Task InsertFact(int idalumno, string rutafact)
+        public int InsertFact(int idalumno, string rutafact, ref int codfactura)
         {
-            string sql = "SP_INSERT_FACTURA @IDALUMNO, @FACTURA";
+            string sql = "SP_INSERT_FACTURA @IDALUMNO, @FACTURA, @CODFACTURA OUT";
             SqlParameter pamidalumno = new SqlParameter("@IDALUMNO", idalumno);
             SqlParameter pamrutafact = new SqlParameter("@FACTURA", rutafact);
-            await this.context.Database.ExecuteSqlRawAsync(sql, pamidalumno, pamrutafact);
+            SqlParameter pamcodfactura = new SqlParameter("@CODFACTURA", -1);
+            pamcodfactura.Direction = ParameterDirection.Output;
+            //var consulta = this.context.Alumnos.Execute(sql, pamidalumno, pamrutafact, pamcodfactura);
+            codfactura = (int)pamcodfactura.Value;
+            this.context.Database.ExecuteSqlRawAsync(sql, pamidalumno, pamrutafact, pamcodfactura);
+            return codfactura;
         }
         public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
             var grupos = from datos in this.context.AlumnosPagos
                          select datos;
             return await grupos.ToListAsync();
+        }
+        public async Task<AlumnoPagos> GetAlumno(int idalumno)
+        {
+            var alumno = from datos in this.context.AlumnosPagos
+                         where datos.IdAlumno==idalumno
+                         select datos;
+            return await alumno.FirstOrDefaultAsync();
         }
         public async Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno)
         {

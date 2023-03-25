@@ -37,19 +37,23 @@
                 <div class="sm:flex">
                     <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                         <div class="lg:pr-3">
+                            <form id="searchName" method="post">
                             <div class="relative mt-1 lg:w-64 xl:w-96">
                                 <label for="nombre-search" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del alumno</label>
                                 <input type="text" name="nombrealumno" id="settings-nombrealumno" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nombre">
                             </div>
+                            </form>
                         </div>
                     </div>
                     <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                        <div class="lg:pr-3">
-                            <div class="relative mt-1 lg:w-64 xl:w-96">
-                                <label for="settings-fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Periodo tiempo/fecha</label>
-                                <input type="date" name="fecha" id="settings-fecha" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nombre">
+                        <form id="searchFecha" method="post">
+                            <div class="lg:pr-3">
+                                <div class="relative mt-1 lg:w-64 xl:w-96">
+                                    <label for="settings-fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de inicio</label>
+                                    <input type="date" name="fecha" id="settings-fecha" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nombre">
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="sm:flex">
@@ -63,9 +67,6 @@
             </div>
         </div>
     </div>
-@*ALUMNOS PARCIAL*@
-@*<div id="alumnosparcial" class="flex flex-col"></div>*@
-@*ALUMNOS PARCIAL*@
 <div class="flex flex-col">
         <div class="overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
@@ -112,7 +113,7 @@
                                             </div>
                                         </td>
                                         <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                            <img class="w-10 h-10 rounded-full" src="~/archivos/fotosalumnos/@alumno.Foto" alt="Foto alumno">
+                                            <img class="w-10 h-10 rounded-full" src="~/fotosalumnos/@alumno.Foto" alt="Foto alumno">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base font-semibold text-gray-900 dark:text-white">@alumno.NombreAlumno</div>
                                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">michael.gough@flowbite.com</div>
@@ -128,13 +129,33 @@
                                             </div>
                                         </td>
                                         <td class="p-4 space-x-2 whitespace-nowrap">
-                                            <button type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-                                                Update
-                                            </button>
+                                            <a name="idalumno"
+                                                value="idalumno"
+                                                id="generarFact" data-drawer-target="drawer-enviar-factura-default" data-drawer-show="drawer-enviar-factura-default" aria-controls="drawer-enviar-factura-default"
+                                                data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                                                </path>
+                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd">
+                                                </path></svg>
+                                                Generar factura
+                                            </a>
+                                            @*<a asp-action="Index"
+                                                asp-controller="ClientesPotenciales"
+                                                asp-route-idinteresado="@alumno.IdAlumno"
+                                               style="cursor:pointer"
+                                               id="enviarCorreoButton" data-drawer-target="drawer-enviar-correo-default" data-drawer-show="drawer-enviar-correo-default" aria-controls="drawer-enviar-correo-default" data-drawer-placement="right"
+                                               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                Enviar correo
+                                            </a>*@
                                             <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-product-default" data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                                Delete item
+                                                Enviar factura
                                             </button>
                                         </td>
                                     </tr>
@@ -146,6 +167,9 @@
             </div>
         </div>
     </div>
+@*ALUMNOS PARCIAL*@
+@*<div id="alumnosparcial" class="flex flex-col"></div>*@
+@*ALUMNOS PARCIAL*@
 <div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center mb-4 sm:mb-0">
             <a href="#" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -223,76 +247,52 @@
         </div>
     }
 <!-- Factura Alumn@@ Modal -->
-<div id="drawer-update-product-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-x-full" tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-    <h5 id="drawer-label" class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Update Product</h5>
-        <button type="button" data-drawer-dismiss="drawer-update-product-default" aria-controls="drawer-update-product-default" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <form asp-controller="Alumnos" asp-action="GenerarFactura">
-            <div class="space-y-4">
-                <div>
-                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                    <input type="text" name="nombrealumno" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
-                </div>
-                <div>
-                    <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI/NIE/PASAPORTE</label>
-                    <input type="text" name="dni" id="dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
-                </div>
-                <div>
-                    <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
-                    <input type="text" name="direccion" id="direccion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
-                </div>
-                <div>
-                    <label for="curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
-                    <select id="curso" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">-</option>
-                        @foreach (Curso curso in cursos)
-                        {
-                            <option value="@curso.CodCurso" selected="">@curso.NombreCurso</option>
-                        }
-                    </select>
-                </div>
-                <div>
-                    <label for="pago" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pago</label>
-                    <input type="text" name="pago" id="pago" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="149" required="">
-                </div>
-                <div>
-                    <label for="concepto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Concepto</label>
-                    <textarea id="concepto" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="CUOTA CURSO QUIROMASAJE"></textarea>
-                </div>
-            </div>
-            <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
-                <button type="submit" class="w-full justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                    Guardar
-                </button>
-                <button type="button" class="w-full justify-center text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
-                    <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                    Enviar
-                </button>
-            </div>
-        </form>
-    </div>
+<div id="drawer-enviar-factura-default" class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-x-full" tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+    @*MODAL*@
+</div>
 </main>
 @section Scripts {
     <script>
         $(document).ready(function () {
-            var request = "/Alumnos/_AlumnosPagos";
-            $("#alumnosparcial").load(request);
-
             $('#settings-nombrealumno').keyup(function () {
-                var nombrealumno = $(this).val();
-                console.log(nombrealumno);
-                var request = "/Alumnos/_AlumnosPagos?nombrealumno=" + nombrealumno;
-                $("#alumnosparcial").load(request);
+                $('#searchName').submit();
             });
+            $('#settings-fecha').change(function () {
+                console.log('holo')
+                $('#searchFecha').submit();
+            });
+            $('#generarFact').click(function () {
+                var idalumno = $(this).val();
+                console.log(idalumno);
+                //var request = "/Alumnos/Index?idalumno=" + idalumno;
+                //$("#drawer-enviar-factura-default").load(request);
+                //$("#drawer-enviar-factura-default").toggleClass("translate-x-full transform-none");
+            });
+            $('#generarFact').click(function () {
+                var idalumno = $(this).val();
+                console.log(idalumno);
+                var request = "/Alumnos/GetAlumno?idalumno=" + idalumno;
+                $("#drawer-enviar-factura-default").load(request);
+                $("#drawer-enviar-factura-default").toggleClass("translate-x-full transform-none");
+            });
+            //var request = "/Alumnos/_AlumnosPagos";
+            //$("#alumnosparcial").load(request);
 
-            $('#settings-fecha').change('input', function () {
-                var fecha = $(this).val();
-                console.log(fecha);
-                var request = "/Alumnos/_AlumnosPagos?fecha=" + fecha;
-                $("#alumnosparcial").load(request);
-            });
+            //$('#settings-nombrealumno').keyup(function () {
+            //    var nombrealumno = $(this).val();
+            //    console.log(nombrealumno);
+            //    var request = "/Alumnos/_AlumnosPagos?nombrealumno="+nombrealumno;
+            //    $("#alumnosparcial").load(request);
+            //});
+            //$('#settings-nombrealumno').keyup(function () {
+            //    $("#form1").submit();
+            //});
+            //$('#settings-fecha').change('input', function () {
+            //    var fecha = $(this).val();
+            //    console.log(fecha);
+            //    var request = "/Alumnos/_AlumnosPagos?fecha="+fecha;
+            //    $("#alumnosparcial").load(request);
+            //});
         });
     </script>
 }

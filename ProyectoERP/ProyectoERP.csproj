@@ -12,7 +12,6 @@
 </ItemGroup>
 <ItemGroup>
   <Folder Include="Views\Cursos\" />
-  <Folder Include="wwwroot\archivos\" />
 </ItemGroup>
 
 <Target Name="Tailwind" BeforeTargets="Build">

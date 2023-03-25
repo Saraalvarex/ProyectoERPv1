@@ -77,7 +77,7 @@ namespace ProyectoERP.Controllers
             string[] correosarray = para.Split(',');
             List<string> correos = new List<string>(correosarray);
             await this.helperMail.SendMailAsync(correos, asunto, mensaje);
-            ViewBag.MENSAJE = "Email enviado correctamente";
+            ViewBag.MENSAJE = "Emails enviado correctamente";
             return RedirectToAction("Index");
         }
         public IActionResult _CorreosMasivos(string correos)
