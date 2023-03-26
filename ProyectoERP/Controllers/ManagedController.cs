@@ -20,13 +20,13 @@ namespace ProyectoERP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(string username, string password)
+        public async Task<IActionResult> LogIn(string nombreusuario, string clave)
         {
-            Usuario usuario = await this.repo.ExisteUsuario(username, int.Parse(password));
+            Usuario usuario = await this.repo.ExisteUsuario(nombreusuario, clave);
             if (usuario != null)
             {
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                Claim claimname = new Claim(ClaimTypes.Name, username);
+                Claim claimname = new Claim(ClaimTypes.Name, nombreusuario);
                 Claim claimid = new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString());
                 Claim claimrol = new Claim(ClaimTypes.Role, usuario.Rol.ToString());
                 identity.AddClaim(claimname);

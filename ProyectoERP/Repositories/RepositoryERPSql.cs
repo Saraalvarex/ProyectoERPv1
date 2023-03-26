@@ -101,9 +101,9 @@ namespace ProyectoERP.Repositories
         }
 
        //USUARIOS
-        public async Task<Usuario> ExisteUsuario(string nombreusuario, int idusuario)
+        public async Task<Usuario> ExisteUsuario(string nombreusuario, string clave)
         {
-            var consulta = this.context.Usuarios.Where(x => x.NombreUsuario == nombreusuario && x.IdUsuario == idusuario);
+            var consulta = this.context.Usuarios.Where(x => x.NombreUsuario == nombreusuario && x.Clave == clave);
             return await consulta.FirstOrDefaultAsync();
         }
 

@@ -21,14 +21,14 @@ namespace ProyectoERP.Filters
             {
                 context.Result = this.GetRoute("Managed", "LogIn");
             }
-            else
-            {
+            //else
+            //{
                 //MAS CARACTERISTICAS: ROL
                 //if (user.IsInRole("ADMIN") == false && user.IsInRole("RECEPCION") == false && user.IsInRole("ANALISTA") == false)
                 //{
-                    context.Result = this.GetRoute("Managed", "ErrorAcceso");
+                //context.Result = this.GetRoute("Managed", "ErrorAcceso");
                 //}
-            }
+            //}
         }
         //Como haremos varias redirecciones, creamos un metodo para crear las rutas
         private RedirectToRouteResult GetRoute(string controller, string action)
