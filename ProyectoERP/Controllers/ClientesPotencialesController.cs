@@ -30,18 +30,24 @@ namespace ProyectoERP.Controllers
             {
                 string[] correosArray = correos.Split(',');
                 ViewBag.CORREOS = new List<string>(correosArray);
-                //string c = correos.ToString();
-                //ViewBag.CORREOS = c;
             }
             return View(clientes);
         }
 
         [HttpPost]
-        public IActionResult Index(string curso)
+        public async Task<IActionResult> Index(string? curso, string? nombrecliente)
         {
             List<Curso> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
-            List<ClientePotencial> clientes = this.repo.FindClientesP(curso);
+            List<ClientePotencial> clientes = new List<ClientePotencial>();
+            if (curso!=null)
+            {
+                clientes = this.repo.FindClientesP(curso);
+            }
+            else if(nombrecliente!=null)
+            {
+                clientes = await this.repo.FindClientesPNombre(nombrecliente);
+            }
             return View(clientes);
         }
         public IActionResult InsertarCliente()

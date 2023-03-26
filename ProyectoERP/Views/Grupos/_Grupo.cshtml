@@ -35,7 +35,7 @@
                     <tbody id="tbodyGrupos" class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <a asp-controller="Alumnos" asp-action="Index">@Model.CodGrupo</a>
+                                <a asp-controller="Alumnos" asp-action="Index" asp-route-codgrupo="@Model.CodGrupo">@Model.CodGrupo</a>
                                 </td>
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@Model.Curso</td>
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@Model.Turno</td>

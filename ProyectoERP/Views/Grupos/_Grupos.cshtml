@@ -37,7 +37,7 @@
                             {
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <a asp-controller="Alumnos" asp-action="Index">@grupo.CodGrupo</a>
+                                    <a asp-controller="Alumnos" asp-action="Index" asp-route-codgrupo="@grupo.CodGrupo">@grupo.CodGrupo</a>
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@grupo.Curso</td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@grupo.Turno</td>

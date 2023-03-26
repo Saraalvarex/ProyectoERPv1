@@ -240,6 +240,13 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToList();
         }
+        public async Task<List<ClientePotencial>> FindClientesPNombre(string nombrecliente)
+        {
+            var consulta = await this.context.ClientesPotenciales
+                                 .Where(a => a.NombreCliente.Contains(nombrecliente))
+                                 .ToListAsync();
+            return consulta;
+        }
 
         public ClientePotencial GetCliente(int idinteresado)
         {

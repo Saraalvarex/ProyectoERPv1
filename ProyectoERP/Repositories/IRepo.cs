@@ -10,6 +10,7 @@ namespace ProyectoERP.Repositories
         Usuario LoginUser(string nombreusuario, string clave);
         List<ClientePotencial> GetClientesP();
         List<Curso> GetCursos();
+        Task<List<ClientePotencial>> FindClientesPNombre(string nombrecliente);
         List<ClientePotencial> FindClientesP(string curso);
         ClientePotencial GetCliente(int id);
         Task <List<Grupo>> GetGrupos();
