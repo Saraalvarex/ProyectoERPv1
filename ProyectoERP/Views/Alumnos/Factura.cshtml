@@ -1,0 +1,62 @@
+﻿@model Alumno
+@{
+    ViewData["Title"] = "Factura";
+}
+@{
+    List<Curso> cursos = ViewBag.CURSOS as List<Curso>;
+}
+<main>
+    <div class="px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+        <div class="col-span-2">
+            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <h3 class="mb-4 text-xl font-semibold dark:text-white">Generar factura</h3>
+                <form asp-controller="Alumnos" asp-action="GenerarFactura">
+                    <div class="grid grid-cols-6 gap-6">
+                        <div class="col-span-6 sm:col-span-3" hidden>
+                            <label for="idalumno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                            <input type="number" value="@Model.IdAlumno" name="idalumno" id="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="nombrealumno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                            <input type="text" value="@Model.NombreAlumno" name="nombrealumno" id="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento de identidad</label>
+                            <input type="text" value="@Model.DocId" name="dni" id="dni" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                            <input type="text" value="@Model.Direccion" name="direccion" id="direccion" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha</label>
+                            <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" name="fecha" id="fecha" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
+                            @*<input type="text" name="address" id="address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="e.g. California" required="">*@
+                            <select id="curso" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option selected="">-</option>
+                                @foreach (Curso curso in cursos)
+                                {
+                                    <option value="@curso.CodCurso" selected="">@curso.NombreCurso</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="pago" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cuota</label>
+                            <input type="text" name="pago" id="pago" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="120" required="">
+                        </div>
+                        <div class="col-span-6">
+                            <label for="concepto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Concepto</label>
+                            <input type="text" name="concepto" id="concepto" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="CUOTA CURSO QUIROMASAJE" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-full">
+                            <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

@@ -4,6 +4,7 @@ namespace ProyectoERP.Repositories
 {
     public interface IRepo
     {
+        Task<Usuario> ExisteUsuario(string nombreusuario, string clave);
         Task RegisterUser(string nombreusuario, string email, string clave, string rol, string foto);
         Task RegisterUser(string nombreusuario, string email, string clave, string rol);
         Usuario LoginUser(string nombreusuario, string clave);
@@ -18,12 +19,12 @@ namespace ProyectoERP.Repositories
         Task InsertGrupo(string codcurso, string turno, string dias, string fechainicio);
         Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso);
         Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios);
-        Task <List<AlumnoPagos>> GetAlumnosPagos();
-        Task<Usuario> ExisteUsuario(string nombreusuario, string clave);
+        Task<List<AlumnoPagos>> GetAlumnosPagos();
         Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosGrupoAsync(string codgrupo);
-        Task<AlumnoPagos> GetAlumno(int idalumno);
-        int InsertFact(int idalumno, string rutafact, ref int codfactura);
+        Task<List<AlumnoPagos>> GetAlumnosGrupoAsync(string codgrupo);
+        Task<Alumno> GetAlumno(int idalumno);
+        Task<int> InsertFactAsync(int idalumno, string rutafact);
     }
 }

@@ -13,6 +13,7 @@ namespace ProyectoERP.Data
         public DbSet<AlumnoPagos> AlumnosPagos { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
+        public DbSet<Factura> Facturas { get; set; }
     }
     
 }

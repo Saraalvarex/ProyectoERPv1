@@ -3,7 +3,6 @@ using OfficeOpenXml;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
-using OfficeOpenXml;
 
 namespace ProyectoERP.Controllers
 {
@@ -16,11 +15,18 @@ namespace ProyectoERP.Controllers
             this.repo = repo;
             this.helperPath = helperPath;
         }
-        public async Task<IActionResult> GenerarFactura(string dni, int idalumno, string nombrealumno, string direccion, int pago, string concepto, DateTime? fecha)
+        public async Task<IActionResult> Factura(int idalumno)
+        {
+            List<Curso> cursos = this.repo.GetCursos();
+            ViewBag.CURSOS = cursos;
+            Alumno alumno = await this.repo.GetAlumno(idalumno);
+            return View(alumno);
+        }
+        public async Task<IActionResult> GenerarFactura(string dni, int idalumno, string nombrealumno, string direccion, int pago, string concepto, DateTime? fecha, string? curso)
         {
             if (fecha == null)
             {
-                fecha= DateTime.Now;
+                fecha = DateTime.Now;
             }
             //Me pide licencia comercial
             ExcelPackage.LicenseContext = LicenseContext.Commercial;
@@ -34,47 +40,36 @@ namespace ProyectoERP.Controllers
             sheet.Cells["B18"].Value = nombrealumno;
             sheet.Cells["B19"].Value = direccion;
             sheet.Cells["B22"].Value = concepto;
+            sheet.Cells["B22"].Value = pago;
             sheet.Cells["G17"].Value = fecha.Value;
+            sheet.Cells["B18"].Value = nombrealumno;
             sheet.Cells["G18"].Value = dni;
-            sheet.Cells["G22"].Value = pago;
+            //mirar celda curso
+            sheet.Cells["G55"].Value = curso;
             //Guardamos el archivo de Excel en la ruta
             string nombreSinEspacios = nombrealumno.Replace(" ", ""); //quitamos todos los espacios en blanco
-            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios + ".xlsx", Folders.Facturas);
+            int codfactura = await this.repo.InsertFactAsync(idalumno, "\\" + nombreSinEspacios);
+            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios+codfactura+".xlsx", Folders.Facturas);
+
             var fileModificado = new FileInfo(rutaArchivoFinal);
             package.SaveAs(fileModificado);
-            int codfactura = 0;
-            this.repo.InsertFact(idalumno, nombreSinEspacios + ".xlsx", ref codfactura);
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? codgrupo)
         {
             List<Curso> cursos = this.repo.GetCursos();
             ViewBag.CURSOS = cursos;
-            List<AlumnoPagos> alumnos = await this.repo.GetAlumnosPagos();
+            List<AlumnoPagos> alumnos = new List<AlumnoPagos>();
+            if (codgrupo != null)
+            {
+                alumnos = await this.repo.GetAlumnosGrupoAsync(codgrupo);
+            }else
+            {
+                alumnos = await this.repo.GetAlumnosPagos();
+            }
             return View(alumnos);
         }
-
-        //[HttpPost]
-        public async Task<IActionResult> GetAlumno(int idalumno)
-        {
-            List<Curso> cursos = this.repo.GetCursos();
-            AlumnoPagos alumno = await this.repo.GetAlumno(idalumno);
-            ViewBag.ALUMNO = alumno;
-            ViewBag.CURSOS = cursos;
-            List<AlumnoPagos> alumnos = await this.repo.GetAlumnosPagos();
-            return RedirectToAction("Index",alumnos);
-        }
-        public async Task<IActionResult> _Factura(int idalumno)
-        {
-            List<Curso> cursos = this.repo.GetCursos();
-            AlumnoPagos alumno = await this.repo.GetAlumno(idalumno);
-            ViewBag.ALUMNO = alumno;
-            ViewBag.CURSOS = cursos;
-            List<AlumnoPagos> alumnos = await this.repo.GetAlumnosPagos();
-            return PartialView("_Factura", alumnos);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Index(string? nombrealumno, DateTime? fecha)
         {
@@ -91,23 +86,6 @@ namespace ProyectoERP.Controllers
                 alumnos = await this.repo.FiltroAlumnosPagosFecha(fecha.Value);
             }
             return View("Index", alumnos);
-        }
-
-        public async Task<IActionResult> _AlumnosPagos(string? nombrealumno, DateTime? fecha)
-        {
-            List<Curso> cursos = this.repo.GetCursos();
-            ViewBag.CURSOS = cursos;
-            List<AlumnoPagos> alumnos = new List<AlumnoPagos>();
-            //alumnos = await this.repo.GetAlumnosPagos();
-            if (nombrealumno != null)
-            {
-                alumnos = await this.repo.FiltroNombreAlumnoAsync(nombrealumno);
-            }
-            else if (fecha != null)
-            {
-                alumnos = await this.repo.FiltroAlumnosPagosFecha(fecha.Value);
-            }
-            return PartialView("_AlumnosPagos", alumnos);
         }
     }
 }

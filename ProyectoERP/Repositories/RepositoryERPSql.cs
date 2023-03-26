@@ -65,17 +65,25 @@ using System.Data;
 //GO
 //SELECT* FROM ALUMNOS WHERE NOMBRE LIKE '%pepe%';
 
-//CREATE PROCEDURE SP_INSERT_FACTURA
-//(@IDALUMNO INT, @FACTURA NVARCHAR(100), @CODFACTURA INT OUT)
+//ALTER PROCEDURE[dbo].[SP_INSERT_FACTURA]
+//(
+//@IDALUMNO INT,
+//@FACTURA NVARCHAR(100), 
+//    @CODFACTURA INT OUT
+//)
 //AS
+//BEGIN
 //    DECLARE @MAX_CODFACTURA INT
 //    SET @MAX_CODFACTURA = (SELECT COALESCE(MAX(CODFACTURA), 0) +1 FROM FACTURAS)
+
+//    --Concatenar el código de factura al final de la ruta de la factura
+//    SET @FACTURA = CONCAT(@FACTURA, '_', @MAX_CODFACTURA, '.xlsx')
     
 //    INSERT INTO FACTURAS
 //    VALUES (@MAX_CODFACTURA, @IDALUMNO, @FACTURA)
 
 //    SET @CODFACTURA = @MAX_CODFACTURA
-//GO
+//END
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -170,17 +178,22 @@ namespace ProyectoERP.Repositories
             }
         }
         //ALUMNOSPAGOS
-        public int InsertFact(int idalumno, string rutafact, ref int codfactura)
+        public async Task<int> InsertFactAsync(int idalumno, string rutafact)
         {
             string sql = "SP_INSERT_FACTURA @IDALUMNO, @FACTURA, @CODFACTURA OUT";
             SqlParameter pamidalumno = new SqlParameter("@IDALUMNO", idalumno);
             SqlParameter pamrutafact = new SqlParameter("@FACTURA", rutafact);
             SqlParameter pamcodfactura = new SqlParameter("@CODFACTURA", -1);
             pamcodfactura.Direction = ParameterDirection.Output;
-            //var consulta = this.context.Alumnos.Execute(sql, pamidalumno, pamrutafact, pamcodfactura);
-            codfactura = (int)pamcodfactura.Value;
-            this.context.Database.ExecuteSqlRawAsync(sql, pamidalumno, pamrutafact, pamcodfactura);
-            return codfactura;
+            var consulta = await this.context.Database.ExecuteSqlRawAsync(sql, pamidalumno, pamrutafact, pamcodfactura);
+            return consulta;
+        }
+        public async Task<List<AlumnoPagos>> GetAlumnosGrupoAsync(string codgrupo)
+        {
+            var grupos = from datos in this.context.AlumnosPagos
+                         where datos.CodGrupo==codgrupo
+                         select datos;
+            return await grupos.ToListAsync();
         }
         public async Task<List<AlumnoPagos>> GetAlumnosPagos()
         {
@@ -188,9 +201,9 @@ namespace ProyectoERP.Repositories
                          select datos;
             return await grupos.ToListAsync();
         }
-        public async Task<AlumnoPagos> GetAlumno(int idalumno)
+        public async Task<Alumno> GetAlumno(int idalumno)
         {
-            var alumno = from datos in this.context.AlumnosPagos
+            var alumno = from datos in this.context.Alumnos
                          where datos.IdAlumno==idalumno
                          select datos;
             return await alumno.FirstOrDefaultAsync();

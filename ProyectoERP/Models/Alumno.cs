@@ -10,7 +10,7 @@ namespace ProyectoERP.Models
         [Column("IDALUMNO")]
         public int IdAlumno { get; set; }
         [Column("DOCIDENTIDAD")]
-        public int DocId { get; set; }
+        public string DocId { get; set; }
         [Column("NOMBRE")]
         public string NombreAlumno { get; set; }
         [Column("TLF")]
