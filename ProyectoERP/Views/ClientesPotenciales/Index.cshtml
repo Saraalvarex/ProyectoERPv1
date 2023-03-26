@@ -133,8 +133,8 @@
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">@cliente.Curso</td>
                             <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">@cliente.Tlf</td>
                                <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                <form asp-controller="Home" asp-action="Index" asp-route-idcliente="@cliente.IdInteresado" id="updateComentarios" class="lg:pr-3" method="post">
-                                   <input id="inputComentarios" type="text" value="@cliente.Comentarios" name="idcliente" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <form asp-controller="ClientesPotenciales" asp-action="UpdateComentarios" asp-route-idcliente="@cliente.IdInteresado" id="updateComentarios" class="lg:pr-3" method="post">
+                                   <input name="comentarios" id="inputComentarios" type="text" value="@cliente.Comentarios" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 </form>
                                </td>
                             <td class="p-4 space-x-2 whitespace-nowrap">
