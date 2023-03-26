@@ -120,7 +120,7 @@
               <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
                 <span class="sr-only">Open user menu</span>
                 @*FOTO PERFIL USER*@
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                                <img class="w-8 h-8 rounded-full" src="~/fotosusuarios/@Context.User.FindFirst("Foto").Value" alt="user photo">
             @*      <img class="w-8 h-8 rounded-full" src="@Context.User.FindFirst("FOTO")" alt="foto usuario">*@
               </button>
             </div>
@@ -131,7 +131,7 @@
                    @Context.User.FindFirst(ClaimTypes.Role).Value
                 </p>
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                   @Context.User.Identity.Name (neil.sims@flowbite.com)
+                  @Context.User.Identity.Name @Context.User.FindFirst("Email").Value
                 </p>
               </div>
               <ul class="py-1" role="none">

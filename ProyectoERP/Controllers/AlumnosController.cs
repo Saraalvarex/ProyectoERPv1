@@ -3,6 +3,7 @@ using OfficeOpenXml;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
+using System.Diagnostics;
 
 namespace ProyectoERP.Controllers
 {
@@ -39,20 +40,25 @@ namespace ProyectoERP.Controllers
             //Agregar los datos de la factura
             sheet.Cells["B18"].Value = nombrealumno;
             sheet.Cells["B19"].Value = direccion;
-            sheet.Cells["B22"].Value = concepto;
-            sheet.Cells["B22"].Value = pago;
+            sheet.Cells["C22"].Value = concepto;
+            sheet.Cells["D22"].Value = curso;
+            sheet.Cells["G22"].Value = pago;
             sheet.Cells["G17"].Value = fecha.Value;
-            sheet.Cells["B18"].Value = nombrealumno;
             sheet.Cells["G18"].Value = dni;
-            //mirar celda curso
-            sheet.Cells["G55"].Value = curso;
+
             //Guardamos el archivo de Excel en la ruta
             string nombreSinEspacios = nombrealumno.Replace(" ", ""); //quitamos todos los espacios en blanco
             int codfactura = await this.repo.InsertFactAsync(idalumno, "\\" + nombreSinEspacios);
-            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios+codfactura+".xlsx", Folders.Facturas);
+            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios+codfactura+".pdf", Folders.Facturas);
 
             var fileModificado = new FileInfo(rutaArchivoFinal);
             package.SaveAs(fileModificado);
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = rutaArchivoFinal,
+                UseShellExecute = true
+            };
+            Process.Start(startInfo);
             return RedirectToAction("Index");
         }
 

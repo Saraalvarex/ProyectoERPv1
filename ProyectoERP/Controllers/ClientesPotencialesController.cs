@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoERP.Filters;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
 
 namespace ProyectoERP.Controllers
 {
+    [AuthorizeUsuarios]
     public class ClientesPotencialesController : Controller
     {
         private IRepo repo;
