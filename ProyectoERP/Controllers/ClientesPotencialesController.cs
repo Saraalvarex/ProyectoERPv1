@@ -62,6 +62,13 @@ namespace ProyectoERP.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateComentarios(int idcliente, string comentarios)
+        {
+            this.repo.UpdateClienteP(idcliente, comentarios);
+            return RedirectToAction("Index");
+        }
+
         //Enviar correo info interesados
         public IActionResult SendMail()
         {

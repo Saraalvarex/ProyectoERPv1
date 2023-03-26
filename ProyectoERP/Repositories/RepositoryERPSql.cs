@@ -266,9 +266,12 @@ namespace ProyectoERP.Repositories
         {
             return await this.context.Alumnos.ToListAsync();
         }
-        public async Task UpdateClienteP(int idinteresado, string nombrecliente, string tlf, string email, string comentarios)
+        public async Task UpdateComentariosCliente(int idinteresado, string comentarios)
         {
-            throw new NotImplementedException();
+            string sql = "SP_UPDATE_COMENTARIOS @IDALUMNO, @COMENTARIOS";
+            SqlParameter pamidcliente = new SqlParameter("@IDALUMNO", idinteresado);
+            SqlParameter pamcomentarios = new SqlParameter("@COMENTARIOS", comentarios);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamidcliente, pamcomentarios);
         }
 
         //CURSOS
