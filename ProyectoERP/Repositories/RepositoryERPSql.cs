@@ -78,12 +78,19 @@ using System.Data;
 
 //    --Concatenar el código de factura al final de la ruta de la factura
 //    SET @FACTURA = CONCAT(@FACTURA, '_', @MAX_CODFACTURA, '.xlsx')
-    
+
 //    INSERT INTO FACTURAS
 //    VALUES (@MAX_CODFACTURA, @IDALUMNO, @FACTURA)
 
 //    SET @CODFACTURA = @MAX_CODFACTURA
 //END
+//CREATE PROCEDURE SP_UPDATE_COMENTARIOS
+//(@IDCLIENTE INT, @COMENTARIOS NVARCHAR(100))
+//AS
+//    UPDATE INTERESADOS
+//	SET COMENTARIOS=@COMENTARIOS
+//	WHERE IDINTERESADO=@IDCLIENTE
+//GO
 #endregion
 
 namespace ProyectoERP.Repositories
@@ -214,7 +221,6 @@ namespace ProyectoERP.Repositories
                                  .Where(a => a.NombreAlumno.Contains(nombrealumno))
                                  .ToListAsync();
             return alumnos;
-
         }
         public Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio)
         {

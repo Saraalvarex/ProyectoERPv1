@@ -65,7 +65,7 @@ namespace ProyectoERP.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateComentarios(int idcliente, string comentarios)
         {
-            this.repo.UpdateClienteP(idcliente, comentarios);
+            await this.repo.UpdateComentariosCliente(idcliente, comentarios);
             return RedirectToAction("Index");
         }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
-using System.Text.RegularExpressions;
 
 namespace ProyectoERP.Controllers
 {
