@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MvcCoreUtilidades.Helpers;
 using ProyectoERP.Helpers;
 using static NuGet.Packaging.PackagingConstants;
 
@@ -7,10 +8,11 @@ namespace ProyectoERP.Controllers
     public class MailsController : Controller
     {
         private HelperMail helperMail;
-
-        public MailsController(HelperMail helperMail)
+        private HelperUploadFiles helperUploadFiles;
+        public MailsController(HelperMail helperMail, HelperUploadFiles helperUploadFiles)
         {
             this.helperMail = helperMail;
+            this.helperUploadFiles = helperUploadFiles;
         }
         public IActionResult Index()
         {
@@ -22,16 +24,16 @@ namespace ProyectoERP.Controllers
         {
             if (files.Count != 0)
             {
-                //if (files.Count > 1)
-                //{
-                //    List<string> paths = await this.helperUploadFiles.UploadFileAsync(files, Folders.Temporal);
-                //    await this.helperMail.SendMailAsync(para, asunto, mensaje, paths);
-                //}
-                //else
-                //{
-                //    string path = await this.helperUploadFiles.UploadFileAsync(files[0], Folders.Temporal);
-                //    await this.helperMail.SendMailAsync(para, asunto, mensaje, path);
-                //}
+                if (files.Count > 1)
+                {
+                    List<string> paths = await this.helperUploadFiles.UploadFileAsync(files, Helpers.Folders.FotosAlumnos);
+                    await this.helperMail.SendMailAsync(para, asunto, mensaje, paths);
+                }
+                else
+                {
+                    string path = await this.helperUploadFiles.UploadFileAsync(files[0], Helpers.Folders.FotosAlumnos);
+                    await this.helperMail.SendMailAsync(para, asunto, mensaje, path);
+                }
             }
             else
             {

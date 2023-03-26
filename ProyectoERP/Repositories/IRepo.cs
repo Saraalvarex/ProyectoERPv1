@@ -1,4 +1,5 @@
-﻿using ProyectoERP.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoERP.Models;
 
 namespace ProyectoERP.Repositories
 {
@@ -21,6 +22,7 @@ namespace ProyectoERP.Repositories
         Task InsertClienteP(string nombrecliente, string tlf, string email, string? comentarios, string codcurso);
         Task UpdateComentariosCliente(int idinteresado, string comentarios);
         Task<List<AlumnoPagos>> GetAlumnosPagos();
+        Task InsertAlumno(string dni, string nombrealumno, int tlf, string email, string direccion, string? foto);
         Task<List<AlumnoPagos>> FiltroNombreAlumnoAsync(string nombrealumno);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosFecha(DateTime fechainicio);
         Task<List<AlumnoPagos>> FiltroAlumnosPagosGrupoAsync(string codgrupo);

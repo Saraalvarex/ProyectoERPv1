@@ -1,10 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProyectoERP.Data;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 
 #region VISTAS y PROCEDURES
 //CREATE VIEW V_INTERESADOS_CURSOS
@@ -90,6 +92,17 @@ using System.Data;
 //    UPDATE INTERESADOS
 //	SET COMENTARIOS=@COMENTARIOS
 //	WHERE IDINTERESADO=@IDCLIENTE
+//GO
+//CREATE PROCEDURE SP_INSERT_ALUMNO
+//(@DNI NVARCHAR(10), @NOMBRE NVARCHAR(10),
+//@TLF INT, @EMAIL NVARCHAR(20),
+//@DIRECCION NVARCHAR(50), @FOTO NVARCHAR(20))
+//AS
+//    DECLARE @IDALUMNO INT;
+//SELECT @IDALUMNO = MAX(IDALUMNO) + 1 FROM ALUMNOS;
+
+//INSERT INTO ALUMNOS (idalumno, DOCIDENTIDAD, NOMBRE, TLF, EMAIL, DIRECCION, FOTO)
+//	VALUES(@IDALUMNO, @DNI, @NOMBRE, @TLF, @EMAIL, @DIRECCION, @FOTO);
 //GO
 #endregion
 
@@ -185,6 +198,17 @@ namespace ProyectoERP.Repositories
             }
         }
         //ALUMNOSPAGOS
+        public async Task InsertAlumno(string dni, string nombrealumno, int tlf, string email, string direccion, string? foto)
+        {
+            string sql = "SP_INSERT_ALUMNO @DNI, @NOMBRE, @TLF, @EMAIL, @DIRECCION, @FOTO";
+            SqlParameter pamdni = new SqlParameter("@DNI", dni);
+            SqlParameter pamnombre = new SqlParameter("@NOMBRE", nombrealumno);
+            SqlParameter pamtlf = new SqlParameter("@TLF", tlf);
+            SqlParameter pamemail = new SqlParameter("@EMAIL", email);
+            SqlParameter pamdireccion = new SqlParameter("@DIRECCION", direccion);
+            SqlParameter pamfoto = new SqlParameter("@FOTO", "woman1.jpg");
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamdni, pamnombre, pamtlf, pamemail, pamdireccion, pamfoto);
+        }
         public async Task<int> InsertFactAsync(int idalumno, string rutafact)
         {
             string sql = "SP_INSERT_FACTURA @IDALUMNO, @FACTURA, @CODFACTURA OUT";

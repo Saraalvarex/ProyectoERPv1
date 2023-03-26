@@ -93,5 +93,11 @@ namespace ProyectoERP.Controllers
             }
             return View("Index", alumnos);
         }
+        [HttpPost]
+        public async Task<IActionResult> InsertarAlumno(string dni, string nombrealumno, int tlf, string email, string direccion, string? foto)
+        {
+            await this.repo.InsertAlumno(dni, nombrealumno, tlf, email, direccion, foto);
+            return RedirectToAction("Index");
+        }
     }
 }

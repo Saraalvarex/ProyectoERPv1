@@ -1,31 +1,41 @@
-﻿using System.IO;
+﻿using ProyectoERP.Helpers;
 
-namespace ProyectoERP.Helpers
+namespace MvcCoreUtilidades.Helpers
 {
     public class HelperUploadFiles
     {
-        private readonly HelperPathProvider helperPath;
-        private IWebHostEnvironment hostEnvironment;
-
-        public HelperUploadFiles(HelperPathProvider pathProvider, IWebHostEnvironment hostEnvironment)
+        private HelperPathProvider helperPath;
+        
+        public HelperUploadFiles(HelperPathProvider pathProvider)
         {
             this.helperPath = pathProvider;
-            this.hostEnvironment = hostEnvironment;
         }
-
-        public async Task<string> UploadFileAsync(IFormFile file, string fileName, string host, Folders folder)
+        public async Task<string> UploadFileAsync(IFormFile file, Folders folder)
         {
-            string type = file.FileName.Split('.')[1];
-            string carpeta = this.helperPath.MapPath(fileName, folder);
-            string finalFileName = fileName + "." + type;
-            string rootPath = this.hostEnvironment.WebRootPath;
-            string path = Path.Combine(rootPath, carpeta, finalFileName);
-
+            string fileName = file.FileName;
+            string path =
+                this.helperPath.MapPath(fileName, folder);
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
-                return Path.Combine(host, carpeta, finalFileName);
             }
+            return path;
+        }
+
+        public async Task<List<string>> UploadFileAsync(List<IFormFile> files, Folders folder)
+        {
+            List<string> paths = new List<string>();
+            foreach (IFormFile file in files)
+            {
+                string fileName = file.FileName;
+                string path = this.helperPath.MapPath(fileName, folder);
+                using (Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                paths.Add(path);
+            }
+            return paths;
         }
     }
 }
