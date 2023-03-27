@@ -49,7 +49,7 @@ namespace ProyectoERP.Controllers
             //Guardamos el archivo de Excel en la ruta
             string nombreSinEspacios = nombrealumno.Replace(" ", ""); //quitamos todos los espacios en blanco
             int codfactura = await this.repo.InsertFactAsync(idalumno, "\\" + nombreSinEspacios);
-            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios+codfactura+".pdf", Folders.Facturas);
+            string rutaArchivoFinal = helperPath.MapPath(nombreSinEspacios+"_"+codfactura+".xlsx", Folders.Facturas);
 
             var fileModificado = new FileInfo(rutaArchivoFinal);
             package.SaveAs(fileModificado);
@@ -70,6 +70,7 @@ namespace ProyectoERP.Controllers
             if (codgrupo != null)
             {
                 alumnos = await this.repo.GetAlumnosGrupoAsync(codgrupo);
+                ViewBag.GRUPO = codgrupo;
             }else
             {
                 alumnos = await this.repo.GetAlumnosPagos();
