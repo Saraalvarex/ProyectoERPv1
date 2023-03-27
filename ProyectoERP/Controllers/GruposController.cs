@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoERP.Filters;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
 
 namespace ProyectoERP.Controllers
 {
+    [AuthorizeUsuarios]
     public class GruposController : Controller
     {
         List<string> diasdelasemana = new List<string>() { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Fin de semana" };

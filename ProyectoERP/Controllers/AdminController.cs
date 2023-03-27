@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoERP.Filters;
 using ProyectoERP.Repositories;
 
 namespace ProyectoERP.Controllers
 {
+    [AuthorizeUsuarios]
     public class AdminController : Controller
     {
         private IRepo repo;

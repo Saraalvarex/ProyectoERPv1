@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using ProyectoERP.Filters;
 using ProyectoERP.Helpers;
 using ProyectoERP.Models;
 using ProyectoERP.Repositories;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 
 namespace ProyectoERP.Controllers
 {
+    [AuthorizeUsuarios]
     public class AlumnosController : Controller
     {
         private IRepo repo;
