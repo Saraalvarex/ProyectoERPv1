@@ -1,6 +1,6 @@
 ﻿using ProyectoERP.Helpers;
 
-namespace MvcCoreUtilidades.Helpers
+namespace ProyectoERP.Helpers
 {
     public class HelperUploadFiles
     {
