@@ -48,7 +48,7 @@ namespace ProyectoERP.Controllers
             }
             else if(nombrecliente!=null)
             {
-                clientes = await this.repo.FindClientesPNombre(nombrecliente);
+                clientes = this.repo.FindClientesP(nombrecliente);
             }
             return View(clientes);
         }

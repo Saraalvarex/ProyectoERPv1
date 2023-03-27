@@ -383,5 +383,6 @@ namespace ProyectoERP.Repositories
                            select datos;
             return consulta.ToListAsync();
         }
+
     }
 }

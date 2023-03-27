@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MvcCoreUtilidades.Helpers;
+using ProyectoERP.Helpers;
 using ProyectoERP.Helpers;
 using static NuGet.Packaging.PackagingConstants;
 
@@ -24,16 +24,16 @@ namespace ProyectoERP.Controllers
         {
             if (files.Count != 0)
             {
-                if (files.Count > 1)
-                {
-                    List<string> paths = await this.helperUploadFiles.UploadFileAsync(files, Helpers.Folders.FotosAlumnos);
-                    await this.helperMail.SendMailAsync(para, asunto, mensaje, paths);
-                }
-                else
-                {
-                    string path = await this.helperUploadFiles.UploadFileAsync(files[0], Helpers.Folders.FotosAlumnos);
-                    await this.helperMail.SendMailAsync(para, asunto, mensaje, path);
-                }
+                //if (files.Count > 1)
+                //{
+                //    List<string> paths = await this.helperUploadFiles.UploadFileAsync(files, Helpers.Folders.FotosAlumnos);
+                //    await this.helperMail.SendMailAsync(para, asunto, mensaje, paths);
+                //}
+                //else
+                //{
+                //    string path = await this.helperUploadFiles.UploadFileAsync(files[0], Helpers.Folders.FotosAlumnos);
+                //    await this.helperMail.SendMailAsync(para, asunto, mensaje, path);
+                //}
             }
             else
             {
